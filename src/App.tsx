@@ -1,14 +1,10 @@
 function App() {
   return (
     <>
-      {/* HEADER */}
-
+      {/* JANGAN EDIT, CUKUP EDIT FILE DARI ROLE MASING-MASING SAJA */}
       <main>
-        {/* MASUKKAN KOMPONEN LAINNYA DI DALAM MAIN KECUALI HEADER & FOOTER */}
         <div className="text-7xl">Inisial Proyek</div>
       </main>
-
-      {/* FOOTER */}
     </>
   );
 }
