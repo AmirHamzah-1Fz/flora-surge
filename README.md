@@ -5,7 +5,7 @@
 * React.js (Library)<br>
 * Vite (Module Bundler)<br>
 * TailwindCSS v4 (Class Utility)<br>
-* TypeScript + SWC<br>
+* TypeScript + SWC (JavaScript Type System + Speedy Web Compiler)<br>
 * PNPM (Package Manager)<br>
 
 ## Resource List:<br>
