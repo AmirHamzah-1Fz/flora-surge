@@ -14,4 +14,5 @@
 * [React Bits](https://www.reactbits.dev)
 
 ### 2. API<br>
-* Belum ada.
+* API Chat-Bot (Pakai Render) : https://greenjobs-api-chatbot.onrender.com
+* Repo Github : https://github.com/MadeRama21/GreenJobs-API-Chatbot
