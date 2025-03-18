@@ -23,8 +23,8 @@
 
 5. **Metrics & Impact Section (ML & FS)**
 - Visualisasi dampak lingkungan dari pekerjaan hijau dalam bentuk card yang menunjukkan datanya.
-- Menunjukkan data dan informasi lainnya dengan adanya pekerjaan hijau
-- Diakses di halaman `/artikel`<br><br>
+- Menunjukkan data jumlah pekerjaan hijau yang tersedia dari API.
+- Diakses di halaman utama `/` dan artikel `/artikel` <br><br>
 
 ## Bagian Web (Section):
 ### Main Page (`/`)
@@ -50,7 +50,6 @@
 		* Artikel -> `/artikel`<br>
 	3. Lowongan (Machine Learning):<br>
 		* Job finder -> `/job-finder`<br>
-		* Informasi lowongan<br>
 	4. Bantuan (Machine Learning):<br>
 		* Tanya FloraBot<br><br>
 * Tombol CTA "Mulai Pembelajaran"<br> -> `/pembelajaran`<br><br>
