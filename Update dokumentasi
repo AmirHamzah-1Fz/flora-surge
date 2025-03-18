@@ -19,9 +19,6 @@
 - **API Chat-Bot** (Pakai Render): https://greenjobs-api-chatbot.onrender.com
 - **Repo Github**: https://github.com/MadeRama21/GreenJobs-API-Chatbot
 
-
-Halo teman-teman, buat ringkasan informasi fitur dan bagian-bagian yang bakalan kita rancang di projek kita udah disusun poin ini.
-
 ## Halaman yang dibangun:
 1. Main page (Halaman root/utama) (`/`)
 2. Job Finder Page (`/job-finder`)
