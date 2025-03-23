@@ -51,7 +51,6 @@ Akan diintegrasikan di setiap halaman
 1. **Home**: Bagian pembuka web
 2. **About**: Informasi fitur dasar, peluang, benefit, dll
 3. **Statistics**: Beberapa statistik pekerjaan hijau
-4. **Contact Form**: Fitur untuk user bisa mengontak ke admin web
 
 ## Article Page:
 Halaman khusus buat informasi tambahan tentang pekerjaan di bidang hijau, seperti dampak terbaru yang dihasilkan, perkembangan, dll.
