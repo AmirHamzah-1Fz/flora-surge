@@ -21,9 +21,27 @@ function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
       isBot: true,
     },
     {
-      content: "Halo! Saya ingin bertanya, apakah ? Ssssssssss",
-      isBot: false
-    }
+      content: 'Halo! Saya ingin bertanya, apakah ? Ssssssssss',
+      isBot: false,
+    },
+    {
+      content: `# Test Markdown format
+
+Kesadaran terhadap *ekonomi hijau* dan *pekerjaan hijau* bukan lagi sekadar tren, melainkan kebutuhan mendesak untuk keberlangsungan hidup di planet ini. Berikut adalah beberapa alasan mengapa kesadaran ini sangat penting bagi kehidupan kita:
+
+## 1. Menghadapi Perubahan Iklim
+
+Perubahan iklim adalah ancaman nyata bagi kehidupan di bumi. Dampaknya sudah kita rasakan dalam bentuk cuaca ekstrem, kenaikan permukaan air laut, dan kerusakan ekosistem.
+
+## 2. Melestarikan Sumber Daya Alam
+
+Sumber daya alam kita terbatas dan semakin menipis. Ekonomi hijau mendorong penggunaan sumber daya secara berkelanjutan, sehingga sumber daya tersebut tetap tersedia untuk generasi mendatang.
+
+## Kesimpulan
+
+Kesadaran terhadap ekonomi hijau dan pekerjaan hijau adalah investasi untuk masa depan yang lebih baik. Dengan mengadopsi gaya hidup dan praktik bisnis yang ramah lingkungan, kita dapat menciptakan dunia yang lebih berkelanjutan, sehat, dan sejahtera bagi generasi mendatang.`,
+      isBot: true,
+    },
   ]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -37,11 +55,11 @@ function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
 
   return (
     <div
-      className={`sc-hidden right-0 fixed z-[10] transition-all duration-[400ms] ease-in-out will-change-transform md:right-12 ${isOpen ? 'bottom-0' : '-bottom-[140vh] rounded-none duration-[400ms] md:-bottom-[480px]'} h-screen w-screen overflow-x-hidden bg-white shadow-xl md:h-[480px] md:w-[360px] md:rounded-xl`}
+      className={`sc-hidden fixed right-0 z-[10] transition-all duration-[400ms] ease-in-out will-change-transform md:right-12 ${isOpen ? 'bottom-0' : '-bottom-[140vh] rounded-none duration-[400ms] md:-bottom-[480px]'} h-screen w-screen overflow-x-hidden bg-white shadow-xl md:h-[480px] md:w-[360px] md:rounded-xl`}
     >
-      <div className="flex h-full w-full flex-col">
+      <div className="relative flex h-full w-full flex-col">
         {/* HEADER */}
-        <div className="flex h-12 w-full items-center justify-between bg-[#0F2C22] px-4 py-3 text-center text-white">
+        <div className="absolute top-0 flex h-12 w-full items-center justify-between bg-[#0F2C22] px-4 py-3 text-center text-white">
           <div className="header text-lg font-semibold text-[#FFF1D1]">
             <h2>FloraBot</h2>
           </div>
@@ -55,15 +73,15 @@ function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
         </div>
 
         {/* CHAT CONTENT */}
-        <div className="flex-1 overflow-y-auto">
-          <div className="flex h-full w-full flex-col gap-y-6 px-4 pt-10 pb-20">
+        <div className="sc-hidden flex-1 overflow-y-auto">
+          <div className="flex h-full w-full flex-col gap-y-6 px-4 pt-20">
             {messages.map((message, index) => (
               <div key={index} className={`w-auto max-w-[87%] md:max-w-[90%] ${message.isBot ? 'self-start' : 'self-end'}`}>
                 <div className={`flex w-auto items-start justify-start gap-2 ${!message.isBot && 'flex-row-reverse'}`}>
                   <img src={message.isBot ? FloraBot : User} alt={`${message.isBot ? 'FloraBot' : 'User'} icon`} />
                   <div className={`mt-1 px-4 py-2 text-[#FBFADA] ${message.isBot ? 'rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#436850]' : 'rounded-tl-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#12372A]'}`}>
                     {message.isBot ? (
-                      <div className="prose prose-sm prose-invert max-w-none text-sm leading-relaxed [overflow-wrap:break-word] [word-break:break-word] whitespace-pre-wrap">
+                      <div className="prose prose-invert prose-sm prose-headings:text-[#FBFADA] prose-headings:font-bold prose-headings:-mb-3 prose-h1:text-base prose-h2:text-sm prose-p:text-sm prose-p:mb-0 max-w-none text-sm leading-relaxed [overflow-wrap:break-word] [word-break:break-word] whitespace-pre-wrap text-white">
                         <ReactMarkdown>{message.content}</ReactMarkdown>
                       </div>
                     ) : (
