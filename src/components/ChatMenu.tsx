@@ -2,6 +2,7 @@ import FloraBot from '../assets/icons/FloraBot.svg';
 import User from '../assets/icons/User.svg';
 import ReactMarkdown from 'react-markdown';
 import { useState } from 'react';
+import LogoStempel from '../assets/logo/Logo-stempel.svg'
 
 interface ChatMenuProps {
   isOpen: boolean;
@@ -21,7 +22,7 @@ function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
       isBot: true,
     },
     {
-      content: 'Halo! Saya ingin bertanya, apakah ? Ssssssssss',
+      content: 'Halo kak',
       isBot: false,
     },
     {
@@ -55,17 +56,18 @@ Kesadaran terhadap ekonomi hijau dan pekerjaan hijau adalah investasi untuk masa
 
   return (
     <div
-      className={`sc-hidden fixed right-0 z-[10] transition-all duration-[400ms] ease-in-out will-change-transform md:right-12 ${isOpen ? 'bottom-0' : '-bottom-[140vh] rounded-none duration-[400ms] md:-bottom-[480px]'} h-screen w-screen overflow-x-hidden bg-white shadow-xl md:h-[480px] md:w-[360px] md:rounded-xl`}
+      className={`sc-hidden fixed right-0 z-[10] transition-all duration-[400ms] ease-in-out will-change-transform md:right-12 ${isOpen ? 'bottom-0' : '-bottom-[140vh] rounded-none duration-[400ms] md:-bottom-[480px]'} h-screen w-screen overflow-x-hidden bg-white shadow-xl md:h-[480px] md:w-[400px] md:rounded-xl`}
     >
-      <div className="flex h-full w-full flex-col">
+      <div className="relative flex h-full w-full">
         {/* HEADER */}
-        <div className="fixed top-0 flex h-12 w-full items-center justify-between bg-[#0F2C22] px-4 py-3 text-center text-white">
-          <div className="header text-lg font-semibold text-[#FFF1D1]">
+        <div className="absolute top-0 flex h-12 w-full items-center justify-between bg-[var(--primary)] px-4 py-3 text-center text-white">
+          <div className="header text-lg flex justify-start items-center gap-2 font-semibold text-[#FFF1D1]">
+            <img src={LogoStempel} alt="FloraBot icon" width="24" height="24" />
             <h2>FloraBot</h2>
           </div>
 
           {/* CLOSE */}
-          <button onClick={onClose} id="exit" className="group flex h-auto w-auto cursor-pointer items-center justify-center rounded-full p-2 transition-colors duration-300 ease-in-out hover:bg-[hsl(159,49%,15%)]" title="Tutup jendela">
+          <button onClick={onClose} id="exit" className="group flex h-auto w-auto cursor-pointer items-center justify-center rounded-full p-2 transition-colors duration-300 ease-in-out hover:bg-[hsl(159,48%,18%)]" title="Tutup jendela">
             <svg className="h-full w-full shrink-0 fill-[#3BAB84] group-active:scale-95" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
               <path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z" />
             </svg>
@@ -76,10 +78,10 @@ Kesadaran terhadap ekonomi hijau dan pekerjaan hijau adalah investasi untuk masa
         <div className="sc-hidden mb-24 h-auto w-full flex-1 overflow-y-scroll border-b border-[#00000050]">
           <div className="flex h-auto w-full flex-col gap-y-6 px-4 pt-18 pb-8">
             {messages.map((message, index) => (
-              <div key={index} className={`w-auto max-w-[87%] md:max-w-[90%] ${message.isBot ? 'self-start' : 'self-end'}`}>
+              <div key={index} className={`w-auto max-w-[87%] md:max-w-[85%] ${message.isBot ? 'self-start' : 'self-end'}`}>
                 <div className={`flex w-auto items-start justify-start gap-2 ${!message.isBot && 'flex-row-reverse'}`}>
                   <img src={message.isBot ? FloraBot : User} alt={`${message.isBot ? 'FloraBot' : 'User'} icon`} width={36} height={36} />
-                  <div className={`mt-1 px-4 py-2 text-[#FBFADA] ${message.isBot ? 'rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#436850]' : 'rounded-tl-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#12372A]'}`}>
+                  <div className={`mt-1 px-4 py-2 text-[#FBFADA] ${message.isBot ? 'rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#436850]' : 'rounded-tl-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[var(--primary)]'}`}>
                     {message.isBot ? (
                       <div className="prose prose-invert prose-p:text-[#FFF1D1] prose-sm prose-headings:text-[#FFF1D1] prose-headings:text-xl prose-headings:font-bold prose-headings:-mb-3 prose-p:mb-0 prose-h1:text-[#FFF1D1] prose-h2:text-[#FFF1D1] prose-strong:text-[#FFF1D1] prose-em:text-[#FFF1D1] max-w-none text-sm leading-relaxed [overflow-wrap:break-word] [word-break:break-word] whitespace-pre-wrap">
                         <ReactMarkdown>{message.content}</ReactMarkdown>
