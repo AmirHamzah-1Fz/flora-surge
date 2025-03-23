@@ -57,9 +57,9 @@ Kesadaran terhadap ekonomi hijau dan pekerjaan hijau adalah investasi untuk masa
     <div
       className={`sc-hidden fixed right-0 z-[10] transition-all duration-[400ms] ease-in-out will-change-transform md:right-12 ${isOpen ? 'bottom-0' : '-bottom-[140vh] rounded-none duration-[400ms] md:-bottom-[480px]'} h-screen w-screen overflow-x-hidden bg-white shadow-xl md:h-[480px] md:w-[360px] md:rounded-xl`}
     >
-      <div className="relative flex h-full w-full flex-col">
+      <div className="flex h-full w-full flex-col">
         {/* HEADER */}
-        <div className="absolute top-0 flex h-12 w-full items-center justify-between bg-[#0F2C22] px-4 py-3 text-center text-white">
+        <div className="fixed top-0 flex h-12 w-full items-center justify-between bg-[#0F2C22] px-4 py-3 text-center text-white">
           <div className="header text-lg font-semibold text-[#FFF1D1]">
             <h2>FloraBot</h2>
           </div>
@@ -73,8 +73,8 @@ Kesadaran terhadap ekonomi hijau dan pekerjaan hijau adalah investasi untuk masa
         </div>
 
         {/* CHAT CONTENT */}
-        <div className="sc-hidden mb-24 flex-1 overflow-y-auto border-b border-[#00000050]">
-          <div className="flex h-full w-full flex-col gap-y-6 px-4 pt-18">
+        <div className="sc-hidden mb-24 h-auto w-full flex-1 overflow-y-scroll border-b border-[#00000050]">
+          <div className="flex h-auto w-full flex-col gap-y-6 px-4 pt-18 pb-8">
             {messages.map((message, index) => (
               <div key={index} className={`w-auto max-w-[87%] md:max-w-[90%] ${message.isBot ? 'self-start' : 'self-end'}`}>
                 <div className={`flex w-auto items-start justify-start gap-2 ${!message.isBot && 'flex-row-reverse'}`}>
