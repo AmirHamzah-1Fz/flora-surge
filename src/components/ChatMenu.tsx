@@ -21,7 +21,7 @@ function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
       isBot: true,
     },
     {
-      content: "Halo sanak! Saya ingin bertanya, apakah ?",
+      content: "Halo! Saya ingin bertanya, apakah ? Ssssssssss",
       isBot: false
     }
   ]);
