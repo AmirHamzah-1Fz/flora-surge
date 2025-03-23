@@ -75,7 +75,7 @@ Kesadaran terhadap ekonomi hijau dan pekerjaan hijau adalah investasi untuk masa
         </div>
 
         {/* CHAT CONTENT */}
-        <div className="sc-hidden mb-24 h-auto w-full flex-1 overflow-y-scroll border-b border-[#00000050]">
+        <div className="sc-hidden mb-24 h-auto w-full flex-1 overflow-y-auto border-b border-[#00000050]">
           <div className="flex h-auto w-full flex-col gap-y-6 px-4 pt-18 pb-8">
             {messages.map((message, index) => (
               <div key={index} className={`w-auto max-w-[87%] md:max-w-[85%] ${message.isBot ? 'self-start' : 'self-end'}`}>
