@@ -2,7 +2,7 @@ import FloraBot from '../assets/icons/FloraBot.svg';
 import User from '../assets/icons/User.svg';
 import ReactMarkdown from 'react-markdown';
 import { useState } from 'react';
-import LogoStempel from '../assets/logo/Logo-stempel.svg'
+import LogoStempel from '../assets/logo/Logo-stempel.svg';
 
 interface ChatMenuProps {
   isOpen: boolean;
@@ -22,7 +22,7 @@ function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
       isBot: true,
     },
     {
-      content: 'Halo kak',
+      content: 'Halo test, tes',
       isBot: false,
     },
     {
@@ -56,12 +56,12 @@ Kesadaran terhadap ekonomi hijau dan pekerjaan hijau adalah investasi untuk masa
 
   return (
     <div
-      className={`sc-hidden fixed right-0 z-[10] transition-all duration-[400ms] ease-in-out will-change-transform md:right-12 ${isOpen ? 'bottom-0' : '-bottom-[140vh] rounded-none duration-[400ms] md:-bottom-[480px]'} h-screen w-screen overflow-x-hidden bg-white shadow-xl md:h-[480px] md:w-[400px] md:rounded-xl`}
+      className={`fixed right-0 z-[10] transition-all duration-[400ms] ease-in-out will-change-transform md:right-12 ${isOpen ? 'bottom-0' : '-bottom-[140vh] rounded-none duration-[400ms] md:-bottom-[480px]'} h-screen w-screen overflow-x-hidden bg-white shadow-xl md:h-[480px] md:w-[400px] md:rounded-t-xl`}
     >
-      <div className="relative flex h-full w-full">
+      <div className="flex h-full w-full flex-col">
         {/* HEADER */}
-        <div className="absolute top-0 flex h-12 w-full items-center justify-between bg-[var(--primary)] px-4 py-3 text-center text-white">
-          <div className="header text-lg flex justify-start items-center gap-2 font-semibold text-[#FFF1D1]">
+        <div className="flex h-12 w-full items-center justify-between bg-[var(--primary)] px-4 py-3 text-center text-[var(--green4)] shadow-lg md:shadow-md">
+          <div className="header flex items-center justify-start gap-2 text-lg font-semibold text-[#FFF1D1]">
             <img src={LogoStempel} alt="FloraBot icon" width="24" height="24" />
             <h2>FloraBot</h2>
           </div>
@@ -75,8 +75,8 @@ Kesadaran terhadap ekonomi hijau dan pekerjaan hijau adalah investasi untuk masa
         </div>
 
         {/* CHAT CONTENT */}
-        <div className="sc-hidden mb-24 h-auto w-full flex-1 overflow-y-auto border-b border-[#00000050]">
-          <div className="flex h-auto w-full flex-col gap-y-6 px-4 pt-18 pb-8">
+        <div className="scrollbar-thin flex-1 overflow-y-auto border-b border-b-[#00000050]">
+          <div className="flex h-auto w-full flex-col gap-y-6 px-4 py-8">
             {messages.map((message, index) => (
               <div key={index} className={`w-auto max-w-[87%] md:max-w-[85%] ${message.isBot ? 'self-start' : 'self-end'}`}>
                 <div className={`flex w-auto items-start justify-start gap-2 ${!message.isBot && 'flex-row-reverse'}`}>
@@ -97,9 +97,9 @@ Kesadaran terhadap ekonomi hijau dan pekerjaan hijau adalah investasi untuk masa
         </div>
 
         {/* PROMPT */}
-        <div className="absolute bottom-0 h-auto w-full">
-          <div id="prompt" className="sticky bottom-0 left-0 z-[20] h-20 w-full bg-white px-4">
-            <form onSubmit={handleSubmit} className="flex h-full w-full items-start justify-between gap-2">
+        <div className="h-auto w-full">
+          <div id="prompt" className="sticky bottom-0 left-0 z-[20] h-22 w-full bg-white px-4">
+            <form onSubmit={handleSubmit} className="flex h-full w-full items-start justify-between gap-2 pt-4">
               <input type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} className="w-full rounded-full bg-white px-4 py-3 ring-1 ring-black outline-none ring-inset" placeholder="Hello World!" />
               <button
                 type="submit"
