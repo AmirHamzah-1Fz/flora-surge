@@ -1,4 +1,7 @@
 import Header from "./components/Header";
+import Footer from "./components/Footer";
+import ChatBot from "./components/ChatBot";
+
 
 function App() {
   return (
@@ -7,7 +10,10 @@ function App() {
 
       <Header />
       <main className="">
+        <ChatBot />
       </main>
+
+      <Footer />
     </>
   );
 }
