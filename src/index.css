@@ -1,1 +1,16 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "tailwind-scrollbar";
+
+/* VARIABLE */
+@theme {
+    --primary: #12372A;
+    --green1: #436850;
+    --green2: #ADBC9F;
+    --green3: #FBFADA;
+    --green4: #FFFFFF;
+  }
+
+body {
+    @apply bg-green-50;
+}
