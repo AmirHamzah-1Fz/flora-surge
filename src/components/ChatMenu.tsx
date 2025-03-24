@@ -56,7 +56,7 @@ Kesadaran terhadap ekonomi hijau dan pekerjaan hijau adalah investasi untuk masa
 
   return (
     <div
-      className={`fixed right-0 z-[10] transition-all duration-[400ms] ease-in-out will-change-transform md:right-12 ${isOpen ? 'bottom-0' : '-bottom-[140vh] rounded-none duration-[400ms] md:-bottom-[480px]'} h-screen w-screen overflow-x-hidden bg-white shadow-xl md:h-[480px] md:w-[400px] md:rounded-t-xl`}
+      className={`fixed right-0 z-[999] transition-all duration-[400ms] ease-in-out will-change-transform md:right-12 ${isOpen ? 'md:bottom-0 max-sm:top-0' : '-bottom-[140vh] rounded-none duration-[400ms] md:-bottom-[480px]'} h-screen w-screen overflow-x-hidden bg-white shadow-xl md:h-[480px] md:w-[400px] md:rounded-t-xl`}
     >
       <div className="flex h-full w-full flex-col">
         {/* HEADER */}
