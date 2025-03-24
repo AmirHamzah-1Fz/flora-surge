@@ -1,7 +1,8 @@
-import Hero from "./components/Hero";
 import Header from "./components/Header";
+import Hero from "./components/Hero";
 import Footer from "./components/Footer";
 import ChatBot from "./components/ChatBot";
+
 
 function App() {
   return (
