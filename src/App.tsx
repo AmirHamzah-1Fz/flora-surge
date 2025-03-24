@@ -1,3 +1,4 @@
+import Footer from "./components/Footer";
 import ChatBot from "./components/ChatBot";
 
 function App() {
@@ -7,6 +8,8 @@ function App() {
       <main className="">
         <ChatBot />
       </main>
+
+      <Footer />
     </>
   );
 }
