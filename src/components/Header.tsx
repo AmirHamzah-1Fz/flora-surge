@@ -27,17 +27,13 @@ function Header() {
     {
       label: 'Pembelajaran',
       items: [
-        { label: 'Mulai pembelajaran', href: '#' },
+        { label: 'Mulai Pembelajaran', href: '#' },
         { label: 'Artikel', href: '#' },
       ],
     },
     {
       label: 'Lowongan',
-      items: [{ label: 'Job finder', href: '#' }],
-    },
-    {
-      label: 'Bantuan',
-      items: [{ label: 'Tanya FloraBot', href: '#' }]
+      items: [{ label: 'Job Finder', href: '#' }, {label: 'Statistik Pekerjaan', href: '#statistics'}]
     },
   ];
 
