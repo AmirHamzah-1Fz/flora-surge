@@ -1,20 +1,24 @@
-import Header from "./components/Header";
-import Hero from "./components/Hero";
-import Footer from "./components/Footer";
-import ChatBot from "./components/ChatBot";
-
+import { Routes, Route } from 'react-router-dom';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import Home from './pages/Home';
+import Pembelajaran from './pages/Pembelajaran';
+import ArtikelBerita from './pages/ArtikelBerita';
+import JobFinder from './pages/JobFinder';
 
 function App() {
   return (
     <>
-      {/* LETAKKAN FILE KOMPONEN DI DALAM MAIN (TIDAK TERMASUK HEADER & FOOTER) *DI BRANCH MAIN SAJA */}
-
       <Header />
       <main className="">
-        <Hero />
-        <ChatBot />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/pembelajaran" element={<Pembelajaran />} />
+          <Route path="/job-finder" element={<JobFinder />} />
+          <Route path="/artikel-berita" element={<ArtikelBerita />} />
+          <Route path="/artikel-dan-berita" element={<ArtikelBerita />} />
+        </Routes>
       </main>
-
       <Footer />
     </>
   );

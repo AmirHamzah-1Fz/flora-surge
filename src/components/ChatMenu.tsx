@@ -56,7 +56,9 @@ Kesadaran terhadap ekonomi hijau dan pekerjaan hijau adalah investasi untuk masa
 
   return (
     <div
-      className={`fixed right-0 z-[999] transition-all duration-[400ms] ease-in-out will-change-transform md:right-12 ${isOpen ? 'md:bottom-0 max-sm:top-0' : '-bottom-[140vh] rounded-none duration-[400ms] md:-bottom-[480px]'} h-screen w-screen overflow-x-hidden bg-white shadow-xl md:h-[480px] md:w-[400px] md:rounded-t-xl`}
+      className={`fixed right-0 z-[100] transition-all duration-[400ms] ease-in-out will-change-transform md:right-12 ${
+        isOpen ? 'max-md:top-0 max-md:translate-y-0 md:bottom-0' : 'max-md:top-full max-md:translate-y-0 md:-bottom-[480px]'
+      } h-screen w-screen overflow-x-hidden bg-white shadow-xl md:h-[480px] md:w-[400px] md:rounded-t-xl`}
     >
       <div className="flex h-full w-full flex-col">
         {/* HEADER */}
@@ -98,8 +100,8 @@ Kesadaran terhadap ekonomi hijau dan pekerjaan hijau adalah investasi untuk masa
 
         {/* PROMPT */}
         <div className="h-auto w-full">
-          <div id="prompt" className="sticky bottom-0 left-0 z-[20] h-22 w-full bg-white px-4">
-            <form onSubmit={handleSubmit} className="flex h-full w-full items-start justify-between gap-2 pt-4">
+          <div id="prompt" className="sticky bottom-0 left-0 z-[20] h-24 w-full bg-white px-4 max-md:h-28 max-sm:h-36">
+            <form onSubmit={handleSubmit} className="flex h-full w-full items-start justify-between gap-2 pt-6">
               <input type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} className="w-full rounded-full bg-white px-4 py-3 ring-1 ring-black outline-none ring-inset" placeholder="Hello World!" />
               <button
                 type="submit"
