@@ -102,7 +102,7 @@ Kesadaran terhadap ekonomi hijau dan pekerjaan hijau adalah investasi untuk masa
         <div className="h-auto w-full">
           <div id="prompt" className="sticky bottom-0 left-0 z-[20] h-24 w-full bg-white px-4 max-md:h-28 max-sm:h-36">
             <form onSubmit={handleSubmit} className="flex h-full w-full items-start justify-between gap-2 pt-6">
-              <input type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} className="w-full rounded-full bg-white px-4 py-3 ring-1 ring-black outline-none ring-inset max-sm:h-14" placeholder="Hello World!" />
+              <input type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} className="w-full rounded-full bg-white px-4 py-3 ring-1 ring-black outline-none ring-inset" placeholder="Hello World!" />
               <button
                 type="submit"
                 disabled={!inputText.trim()}
