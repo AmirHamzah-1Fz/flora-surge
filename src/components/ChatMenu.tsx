@@ -52,7 +52,7 @@ function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
   return (
     <div
       className={`fixed right-0 z-[100] transition-all duration-[400ms] ring ring-white/10 ease-in-out will-change-transform md:right-12 ${
-        isOpen ? 'max-md:top-0 max-md:translate-y-0 md:bottom-0' : 'max-md:top-full max-md:translate-y-0 md:-bottom-[620px]'
+        isOpen ? 'max-md:top-0 md:bottom-0' : 'max-md:top-full md:-bottom-[650px]'
       } h-screen w-screen overflow-x-hidden bg-white shadow-xl md:h-[480px] md:w-[400px] md:rounded-t-xl`}
     >
       <div className="flex h-full w-full flex-col">
