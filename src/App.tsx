@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import Pembelajaran from './pages/Pembelajaran';
 import ArtikelBerita from './pages/ArtikelBerita';
-import JobFinder from './pages/JobFInder';
+import JobFinder from './pages/JobFinder';
 
 function App() {
   return (
