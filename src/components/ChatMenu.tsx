@@ -22,7 +22,7 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
-      content: 'Halo, saya FloraBot. Saya akan membantu menjawab pertanyaan Anda di **bidang hijau**.',
+      content: 'Halo, aku FloraBot. Aku akan membantu menjawab pertanyaan kamu di **bidang hijau**.',
       isBot: true,
       timestamp: new Date(),
     },
@@ -165,7 +165,7 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
                   <div className={`flex w-full items-start gap-2 ${!message.isBot && 'flex-row-reverse'}`}>
                     <img src={message.isBot ? FloraBot : User} alt={`${message.isBot ? 'FloraBot' : 'User'} icon`} width={36} height={36} />
                     <div className={`flex flex-col ${!message.isBot ? 'items-end' : 'items-start'}`}>
-                      <div className={`px-4 py-2 text-[#FBFADA] ${message.isBot ? 'rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#436850]' : 'rounded-tl-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#12372A]'}`}>
+                      <div className={`px-4 py-2 text-[#FBFADA] w-fit min-h-[30px] flex items-center h-auto ${message.isBot ? 'w-fit min-h-[30px] flex items-center h-auto rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#436850]' : 'rounded-tl-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#12372A]'}`}>
                         {message.isLoading ? (
                           <LoadingDots />
                         ) : message.isBot ? (
@@ -176,7 +176,7 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
                           <p className="text-sm leading-relaxed [overflow-wrap:break-word] [word-break:break-word] whitespace-pre-wrap">{message.content}</p>
                         )}
                       </div>
-                      {index !== 0 && (
+                      {index !== 0 && !message.isLoading && (
                         <span className={`mt-2 px-4 text-xs text-[#12372A]/60`}>
                           {message.timestamp.toLocaleString('en-US', {
                             timeZone: 'Asia/Jakarta',
