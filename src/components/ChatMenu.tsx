@@ -90,7 +90,6 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
     e.preventDefault();
     if (!inputText.trim()) return;
 
-    // Add user message
     setMessages((prev) => [
       ...prev,
       {
@@ -165,10 +164,12 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
                   <div className={`flex w-full items-start gap-2 ${!message.isBot && 'flex-row-reverse'}`}>
                     <img src={message.isBot ? FloraBot : User} alt={`${message.isBot ? 'FloraBot' : 'User'} icon`} width={36} height={36} />
                     <div className={`flex flex-col ${!message.isBot ? 'items-end' : 'items-start'}`}>
+
                       <div className={`px-4 py-2 text-[#FBFADA] w-fit min-h-[30px] flex items-center h-auto ${message.isBot ? 'w-fit min-h-[30px] flex items-center h-auto rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#436850]' : 'rounded-tl-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#12372A]'}`}>
                         {message.isLoading ? (
                           <LoadingDots />
                         ) : message.isBot ? (
+                          
                           <div className="prose prose-invert prose-p:text-[#FFF1D1] prose-sm prose-headings:text-[#FFF1D1] prose-headings:text-xl prose-headings:font-bold prose-headings:-mb-3 prose-p:mb-0 prose-h1:text-[#FFF1D1] prose-h2:text-[#FFF1D1] prose-strong:text-[#FFF1D1] prose-em:text-[#FFF1D1] max-w-none text-sm leading-relaxed [overflow-wrap:break-word] [word-break:break-word] whitespace-pre-wrap">
                             <ReactMarkdown>{message.content}</ReactMarkdown>
                           </div>
@@ -176,6 +177,7 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
                           <p className="text-sm leading-relaxed [overflow-wrap:break-word] [word-break:break-word] whitespace-pre-wrap">{message.content}</p>
                         )}
                       </div>
+
                       {index !== 0 && !message.isLoading && (
                         <span className={`mt-2 px-4 text-xs text-[#12372A]/60`}>
                           {message.timestamp.toLocaleString('en-US', {
