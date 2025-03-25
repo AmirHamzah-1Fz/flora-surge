@@ -6,6 +6,7 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const headerRef = useRef<HTMLElement>(null);
+
   const navigate = useNavigate();
 
   const handleMouseLeave = () => {
