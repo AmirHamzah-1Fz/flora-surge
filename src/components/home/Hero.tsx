@@ -1,4 +1,4 @@
-import Bg from '../assets/img/Background.png';
+import Bg from '../../assets/img/Background.png';
 
 function Hero() {
   return (

@@ -1,47 +1,69 @@
 import Dropdown from './Dropdown';
 import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const headerRef = useRef<HTMLElement>(null);
+  const navigate = useNavigate();
 
   const handleMouseLeave = () => {
     setActiveDropdown(null);
   };
 
-  const MenuItem = ({ href, children }: { href: string; children: React.ReactNode }) => (
-    <a href={href} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#436850]">
-      {children}
-    </a>
-  );
+  const MenuItem = ({ href, children, isLink = false }: { href: string; children: React.ReactNode; isLink?: boolean }) => {
+    const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+      e.preventDefault();
+      if (href.startsWith('/#')) {
+        const elementId = href.replace('/#', '');
+        navigate('/');
+        setTimeout(() => {
+          document.getElementById(elementId)?.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      } else if (isLink) {
+        navigate(href);
+      } else {
+        window.location.href = href;
+      }
+    };
+
+    return (
+      <a href={href} onClick={handleClick} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#436850]">
+        {children}
+      </a>
+    );
+  };
 
   const menuItems = [
     {
       label: 'Beranda',
       items: [
-        { label: 'Tentang', href: '#about' },
-        { label: 'Kontak', href: '#contact' },
+        { label: 'Tentang', href: '/#about', isLink: true },
+        { label: 'Profile', href: '/#profile', isLink: true },
       ],
     },
     {
       label: 'Pembelajaran',
       items: [
-        { label: 'Mulai Pembelajaran', href: '#' },
-        { label: 'Artikel', href: '#' },
+        { label: 'Mulai Pembelajaran', href: '/pembelajaran', isLink: true },
+        { label: 'Artikel', href: '/artikel-dan-berita', isLink: true },
       ],
     },
     {
       label: 'Lowongan',
-      items: [{ label: 'Job Finder', href: '#' }, {label: 'Statistik Pekerjaan', href: '#statistics'}]
+      items: [
+        { label: 'Job Finder', href: '/job-finder', isLink: true },
+        { label: 'Statistik Pekerjaan', href: '/#statistics', isLink: false },
+      ],
     },
   ];
 
   return (
-    <header ref={headerRef} className="fixed top-0 left-0 z-50 h-16 w-full bg-white  py-2 px-[5%] md:px-[4%]" onMouseLeave={handleMouseLeave}>
+    <header ref={headerRef} className="fixed top-0 left-0 z-50 h-16 w-full bg-white px-[5%] py-2 md:px-[4%]" onMouseLeave={handleMouseLeave}>
       <div className="flex h-full w-full items-center justify-between">
         {/* LOGO */}
-        <a href="#home">
+        <a href="/">
           <svg className="shrink-0" width="160" viewBox="0 0 259 47" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M45.7886 33.2206C45.2212 33.8495 34.0335 45.5579 22.7393 40.6193C15.5763 37.4008 12.9168 29.8357 12.3672 28.023C11.0185 28.9154 9.82034 30.0341 8.82114 31.3339C7.1551 33.5774 6.0247 36.2022 5.52332 38.9916C4.70773 43.0053 5.52332 45.2804 3.96306 46.1867C3.59813 46.3923 3.18989 46.5 2.77514 46.5C2.36039 46.5 1.95215 46.3923 1.58722 46.1867C-1.24961 44.6145 -0.0439604 35.5512 3.30705 29.8357C4.04738 28.5947 4.92189 27.4466 5.91338 26.4138C7.55207 24.6807 9.45041 23.2375 11.5339 22.1411C13.8059 20.7774 16.1772 19.6023 18.6259 18.6267C23.1979 16.9725 27.9757 16.0193 32.8101 15.7967C32.6747 15.2947 32.439 14.8283 32.1186 14.428C28.5371 9.82232 14.1402 17.295 13.0232 17.9054C13.1 16.2904 13.4795 14.7069 14.1402 13.2442C17.7926 5.4756 28.5726 5.08717 29.6541 5.08717C30.8799 5.10993 32.1016 5.23986 33.3065 5.4756L34.0689 5.66057C35.2822 5.9216 36.518 6.05176 37.7568 6.049C40.1672 6.06652 42.5569 5.58511 44.7877 4.63262C47.0186 3.68013 49.0461 2.27549 50.753 0.5C55.0083 12.4488 53.1466 25.23 45.7886 33.2206Z"
@@ -60,7 +82,7 @@ function Header() {
             {menuItems.map((menu) => (
               <Dropdown key={menu.label} content={menu.label} isOpen={activeDropdown === menu.label} onOpen={() => setActiveDropdown(menu.label)}>
                 {menu.items.map((item) => (
-                  <MenuItem key={item.label} href={item.href}>
+                  <MenuItem key={item.label} href={item.href} isLink={item.isLink}>
                     {item.label}
                   </MenuItem>
                 ))}
@@ -85,7 +107,7 @@ function Header() {
               {menuItems.map((menu) => (
                 <Dropdown key={menu.label} content={menu.label} isMobile>
                   {menu.items.map((item) => (
-                    <MenuItem key={item.label} href={item.href}>
+                    <MenuItem key={item.label} href={item.href} isLink={item.isLink}>
                       {item.label}
                     </MenuItem>
                   ))}
@@ -96,7 +118,7 @@ function Header() {
         )}
 
         <button type="button" className="hidden cursor-pointer rounded-full bg-[var(--primary)] px-4 py-2 text-center text-sm text-[var(--green3)] lg:block">
-          Mulai Sekarang
+          <a href="/pembelajaran">Mulai Sekarang</a>
         </button>
       </div>
     </header>
