@@ -1,7 +1,7 @@
 import FloraBot from '../assets/icons/FloraBot.svg';
 import User from '../assets/icons/User.svg';
 import ReactMarkdown from 'react-markdown';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import LogoStempel from '../assets/logo/Logo-stempel.svg';
 
 interface ChatMenuProps {
@@ -13,6 +13,7 @@ interface Message {
   content: string;
   isBot: boolean;
   timestamp: Date;
+  isLoading?: boolean;
 }
 
 export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
@@ -26,6 +27,17 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
       timestamp: new Date(),
     },
   ]);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const suggestions = ['Apa itu Green Jobs?', 'Apa itu Green Economy?', 'Manfaat Green Economy'];
 
@@ -78,12 +90,20 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
     e.preventDefault();
     if (!inputText.trim()) return;
 
+    // Add user message
     setMessages((prev) => [
       ...prev,
       {
         content: inputText,
         isBot: false,
         timestamp: new Date(),
+      },
+      // LOADING MESSAGE
+      {
+        content: '',
+        isBot: true,
+        timestamp: new Date(),
+        isLoading: true,
       },
     ]);
 
@@ -95,7 +115,7 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
     const botResponse = await callChatbotAPI(userQuestion);
 
     setMessages((prev) => [
-      ...prev,
+      ...prev.slice(0, -1),
       {
         content: botResponse,
         isBot: true,
@@ -105,6 +125,14 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
 
     setIsLoading(false);
   };
+
+  const LoadingDots = () => (
+    <div className="flex space-x-2">
+      <div className="h-2 w-2 animate-[pulse_1s_ease-in-out_infinite] rounded-full bg-[hsl(141,22%,60%)]"></div>
+      <div className="h-2 w-2 animate-[pulse_1s_ease-in-out_0.333s_infinite] rounded-full bg-[hsl(141,22%,60%)]"></div>
+      <div className="h-2 w-2 animate-[pulse_1s_ease-in-out_0.667s_infinite] rounded-full bg-[hsl(141,22%,60%)]"></div>
+    </div>
+  );
 
   return (
     <div
@@ -129,7 +157,7 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
         </div>
 
         {/* CHAT CONTENT */}
-        <div className="scrollbar-thin flex-1 overflow-y-scroll border-b border-b-[#00000050]">
+        <div ref={chatContainerRef} className="scrollbar-thin scroll-smooth flex-1 overflow-y-scroll border-b border-b-[#00000050]">
           <div className="flex h-auto w-full flex-col px-4 py-8">
             {messages.map((message, index) => (
               <div key={index} className={`w-full border-b border-b-[#00000020] py-4 last:border-b-0`}>
@@ -138,7 +166,9 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
                     <img src={message.isBot ? FloraBot : User} alt={`${message.isBot ? 'FloraBot' : 'User'} icon`} width={36} height={36} />
                     <div className={`flex flex-col ${!message.isBot ? 'items-end' : 'items-start'}`}>
                       <div className={`px-4 py-2 text-[#FBFADA] ${message.isBot ? 'rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#436850]' : 'rounded-tl-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#12372A]'}`}>
-                        {message.isBot ? (
+                        {message.isLoading ? (
+                          <LoadingDots />
+                        ) : message.isBot ? (
                           <div className="prose prose-invert prose-p:text-[#FFF1D1] prose-sm prose-headings:text-[#FFF1D1] prose-headings:text-xl prose-headings:font-bold prose-headings:-mb-3 prose-p:mb-0 prose-h1:text-[#FFF1D1] prose-h2:text-[#FFF1D1] prose-strong:text-[#FFF1D1] prose-em:text-[#FFF1D1] max-w-none text-sm leading-relaxed [overflow-wrap:break-word] [word-break:break-word] whitespace-pre-wrap">
                             <ReactMarkdown>{message.content}</ReactMarkdown>
                           </div>
@@ -177,11 +207,7 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
           </div>
         )}
 
-        {isLoading && (
-          <div className="flex items-center justify-center px-4 py-2">
-            <div className="animate-pulse text-[#12372A]">Mengetik...</div>
-          </div>
-        )}
+        {isLoading && null}
 
         {/* PROMPT */}
         <div className="h-auto w-full">
