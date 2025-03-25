@@ -12,52 +12,47 @@ interface ChatMenuProps {
 interface Message {
   content: string;
   isBot: boolean;
+  timestamp: Date;
 }
 
 function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
   const [inputText, setInputText] = useState('');
+  const [showSuggestions, setShowSuggestions] = useState(true);
   const [messages, setMessages] = useState<Message[]>([
     {
       content: 'Halo, saya FloraBot. Saya akan membantu menjawab pertanyaan Anda di **bidang hijau**.',
       isBot: true,
-    },
-    {
-      content: 'Halo test, tes',
-      isBot: false,
-    },
-    {
-      content: `# Test Markdown Format
-
-Kesadaran terhadap *ekonomi hijau* dan *pekerjaan hijau* bukan lagi sekadar tren, melainkan kebutuhan mendesak untuk keberlangsungan hidup di planet ini. Berikut adalah beberapa alasan mengapa kesadaran ini sangat penting bagi kehidupan kita:
-
-## 1. Menghadapi Perubahan Iklim
-
-Perubahan iklim adalah ancaman nyata bagi kehidupan di bumi. Dampaknya sudah kita rasakan dalam bentuk cuaca ekstrem, kenaikan permukaan air laut, dan kerusakan ekosistem.
-
-## 2. Melestarikan Sumber Daya Alam
-
-Sumber daya alam kita terbatas dan semakin menipis. Ekonomi hijau mendorong penggunaan sumber daya secara berkelanjutan, sehingga sumber daya tersebut tetap tersedia untuk generasi mendatang.
-
-## Kesimpulan
-
-Kesadaran terhadap ekonomi hijau dan pekerjaan hijau adalah investasi untuk masa depan yang lebih baik. Dengan mengadopsi gaya hidup dan praktik bisnis yang ramah lingkungan, kita dapat menciptakan dunia yang lebih berkelanjutan, sehat, dan sejahtera bagi generasi mendatang.`,
-      isBot: true,
+      timestamp: new Date(),
     },
   ]);
+
+  const suggestions = ['Apa itu Green Jobs?', 'Apa manfaat Green Jobs?', 'Bagaimana cara memulai Green Jobs?'];
+
+  const handleSuggestionClick = (suggestion: string) => {
+    setInputText(suggestion);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputText.trim()) return;
 
     // Add user message
-    setMessages((prev) => [...prev, { content: inputText, isBot: false }]);
+    setMessages((prev) => [
+      ...prev,
+      {
+        content: inputText,
+        isBot: false,
+        timestamp: new Date(),
+      },
+    ]);
     setInputText('');
+    setShowSuggestions(false);
   };
 
   return (
     <div
-      className={`fixed right-0 z-[100] transition-all duration-[400ms] ease-in-out will-change-transform md:right-12 ${
-        isOpen ? 'max-md:top-0 max-md:translate-y-0 md:bottom-0' : 'max-md:top-full max-md:translate-y-0 md:-bottom-[480px]'
+      className={`fixed right-0 z-[100] transition-all duration-[400ms] ring ring-white/10 ease-in-out will-change-transform md:right-12 ${
+        isOpen ? 'max-md:top-0 max-md:translate-y-0 md:bottom-0' : 'max-md:top-full max-md:translate-y-0 md:-bottom-[620px]'
       } h-screen w-screen overflow-x-hidden bg-white shadow-xl md:h-[480px] md:w-[400px] md:rounded-t-xl`}
     >
       <div className="flex h-full w-full flex-col">
@@ -77,20 +72,37 @@ Kesadaran terhadap ekonomi hijau dan pekerjaan hijau adalah investasi untuk masa
         </div>
 
         {/* CHAT CONTENT */}
-        <div className="scrollbar-thin flex-1 overflow-y-auto border-b border-b-[#00000050]">
-          <div className="flex h-auto w-full flex-col gap-y-6 px-4 py-8">
+        <div className="scrollbar-thin flex-1 overflow-y-scroll border-b border-b-[#00000050]">
+          <div className="flex h-auto w-full flex-col px-4 py-8">
             {messages.map((message, index) => (
-              <div key={index} className={`w-auto max-w-[87%] md:max-w-[85%] ${message.isBot ? 'self-start' : 'self-end'}`}>
-                <div className={`flex w-auto items-start justify-start gap-2 ${!message.isBot && 'flex-row-reverse'}`}>
-                  <img src={message.isBot ? FloraBot : User} alt={`${message.isBot ? 'FloraBot' : 'User'} icon`} width={36} height={36} />
-                  <div className={`mt-1 px-4 py-2 text-[#FBFADA] ${message.isBot ? 'rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#436850]' : 'rounded-tl-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[var(--primary)]'}`}>
-                    {message.isBot ? (
-                      <div className="prose prose-invert prose-p:text-[#FFF1D1] prose-sm prose-headings:text-[#FFF1D1] prose-headings:text-xl prose-headings:font-bold prose-headings:-mb-3 prose-p:mb-0 prose-h1:text-[#FFF1D1] prose-h2:text-[#FFF1D1] prose-strong:text-[#FFF1D1] prose-em:text-[#FFF1D1] max-w-none text-sm leading-relaxed [overflow-wrap:break-word] [word-break:break-word] whitespace-pre-wrap">
-                        <ReactMarkdown>{message.content}</ReactMarkdown>
+              <div key={index} className={`w-full border-b border-b-[#00000020] py-4 last:border-b-0`}>
+                <div className={`w-auto max-w-[87%] md:max-w-[85%] ${message.isBot ? 'self-start' : 'ml-auto'}`}>
+                  <div className={`flex w-full items-start gap-2 ${!message.isBot && 'flex-row-reverse'}`}>
+                    <img src={message.isBot ? FloraBot : User} alt={`${message.isBot ? 'FloraBot' : 'User'} icon`} width={36} height={36} />
+                    <div className={`flex flex-col ${!message.isBot ? 'items-end' : 'items-start'}`}>
+                      <div className={`px-4 py-2 text-[#FBFADA] ${message.isBot ? 'rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#436850]' : 'rounded-tl-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[var(--primary)]'}`}>
+                        {message.isBot ? (
+                          <div className="prose prose-invert prose-p:text-[#FFF1D1] prose-sm prose-headings:text-[#FFF1D1] prose-headings:text-xl prose-headings:font-bold prose-headings:-mb-3 prose-p:mb-0 prose-h1:text-[#FFF1D1] prose-h2:text-[#FFF1D1] prose-strong:text-[#FFF1D1] prose-em:text-[#FFF1D1] max-w-none text-sm leading-relaxed [overflow-wrap:break-word] [word-break:break-word] whitespace-pre-wrap">
+                            <ReactMarkdown>{message.content}</ReactMarkdown>
+                          </div>
+                        ) : (
+                          <p className="text-sm leading-relaxed [overflow-wrap:break-word] [word-break:break-word] whitespace-pre-wrap">{message.content}</p>
+                        )}
                       </div>
-                    ) : (
-                      <p className="text-sm leading-relaxed [overflow-wrap:break-word] [word-break:break-word] whitespace-pre-wrap">{message.content}</p>
-                    )}
+                      {index !== 0 && (
+                        <span className={`mt-2 px-4 text-xs text-[var(--primary)]/60`}>
+                          {message.timestamp.toLocaleString('en-US', {
+                            timeZone: 'Asia/Jakarta',
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: false,
+                          })}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -98,11 +110,21 @@ Kesadaran terhadap ekonomi hijau dan pekerjaan hijau adalah investasi untuk masa
           </div>
         </div>
 
+        {showSuggestions && (
+          <div className="flex flex-wrap justify-start gap-2 border-b border-b-[#00000050] p-4">
+            {suggestions.map((suggestion, index) => (
+              <button key={index} onClick={() => handleSuggestionClick(suggestion)} className="cursor-pointer rounded-full bg-[#436850] px-4 py-2 text-sm text-[#FFF1D1] transition-colors hover:bg-[#12372A]" title={suggestion}>
+                {suggestion}
+              </button>
+            ))}
+          </div>
+        )}
+
         {/* PROMPT */}
         <div className="h-auto w-full">
           <div id="prompt" className="sticky bottom-0 left-0 z-[20] h-24 w-full bg-white px-4 max-md:h-28 max-sm:h-36">
             <form onSubmit={handleSubmit} className="flex h-full w-full items-start justify-between gap-2 pt-6">
-              <input type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} className="w-full rounded-full bg-white px-4 py-3 ring-1 ring-black outline-none ring-inset" placeholder="Hello World!" />
+              <input type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} className="w-full rounded-full bg-white px-4 py-3 text-sm ring-1 ring-[var(--primary)] outline-none ring-inset" placeholder="Hello World!" />
               <button
                 type="submit"
                 disabled={!inputText.trim()}
