@@ -82,8 +82,9 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
         console.error('Error with format', payload, ':', error);
       }
     }
-
-    return 'Duh, FloraBot lagi mengalami masalah dalam memproses permintaan. Coba lagi nanti.';
+    setTimeOut(() => {
+       return 'Duh, FloraBot lagi mengalami masalah dalam memproses permintaan. Coba lagi nanti.';
+    }, 2000)
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
