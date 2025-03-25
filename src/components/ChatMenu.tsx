@@ -1,7 +1,7 @@
 import FloraBot from '../assets/icons/FloraBot.svg';
 import User from '../assets/icons/User.svg';
 import ReactMarkdown from 'react-markdown';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import LogoStempel from '../assets/logo/Logo-stempel.svg';
 
 interface ChatMenuProps {
@@ -12,57 +12,138 @@ interface ChatMenuProps {
 interface Message {
   content: string;
   isBot: boolean;
+  timestamp: Date;
+  isLoading?: boolean;
 }
 
-function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
+export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
   const [inputText, setInputText] = useState('');
+  const [showSuggestions, setShowSuggestions] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
-      content: 'Halo, saya FloraBot. Saya akan membantu menjawab pertanyaan Anda di **bidang hijau**.',
+      content: 'Halo, aku FloraBot. Aku akan membantu menjawab pertanyaan kamu di **bidang hijau**.',
       isBot: true,
-    },
-    {
-      content: 'Halo test, tes',
-      isBot: false,
-    },
-    {
-      content: `# Test Markdown Format
-
-Kesadaran terhadap *ekonomi hijau* dan *pekerjaan hijau* bukan lagi sekadar tren, melainkan kebutuhan mendesak untuk keberlangsungan hidup di planet ini. Berikut adalah beberapa alasan mengapa kesadaran ini sangat penting bagi kehidupan kita:
-
-## 1. Menghadapi Perubahan Iklim
-
-Perubahan iklim adalah ancaman nyata bagi kehidupan di bumi. Dampaknya sudah kita rasakan dalam bentuk cuaca ekstrem, kenaikan permukaan air laut, dan kerusakan ekosistem.
-
-## 2. Melestarikan Sumber Daya Alam
-
-Sumber daya alam kita terbatas dan semakin menipis. Ekonomi hijau mendorong penggunaan sumber daya secara berkelanjutan, sehingga sumber daya tersebut tetap tersedia untuk generasi mendatang.
-
-## Kesimpulan
-
-Kesadaran terhadap ekonomi hijau dan pekerjaan hijau adalah investasi untuk masa depan yang lebih baik. Dengan mengadopsi gaya hidup dan praktik bisnis yang ramah lingkungan, kita dapat menciptakan dunia yang lebih berkelanjutan, sehat, dan sejahtera bagi generasi mendatang.`,
-      isBot: true,
+      timestamp: new Date(),
     },
   ]);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const suggestions = ['Apa itu Green Jobs?', 'Apa itu Green Economy?', 'Manfaat Green Economy'];
+
+  const handleSuggestionClick = (suggestion: string) => {
+    setInputText(suggestion);
+  };
+
+  const callChatbotAPI = async (question: string) => {
+    const payloadFormats = [{ message: question }, { query: question }, { input: question }, { text: question }, { prompt: question }, { question: question }, { user_input: question }];
+
+    for (const payload of payloadFormats) {
+      try {
+        console.log('Trying payload format:', payload);
+
+        const response = await fetch('https://greenjobs-api-chatbot.onrender.com/chatbot', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+
+        const responseText = await response.text();
+        console.log(`Response status: ${response.status}, Response body:`, responseText);
+
+        if (!response.ok) {
+          console.log(`Format ${JSON.stringify(payload)} failed with status ${response.status}`);
+          continue;
+        }
+
+        let data;
+        try {
+          data = JSON.parse(responseText);
+        } catch {
+          console.log('Response is not valid JSON:', responseText);
+          data = { response: responseText };
+        }
+
+        return data.response || data.message || data.answer || data.result || data.reply || data.text || (typeof data === 'string' ? data : JSON.stringify(data));
+      } catch (error) {
+        console.error('Error with format', payload, ':', error);
+      }
+    }
+
+    return 'Maaf, terjadi kesalahan dalam memproses permintaan Anda.';
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputText.trim()) return;
 
-    // Add user message
-    setMessages((prev) => [...prev, { content: inputText, isBot: false }]);
+    setMessages((prev) => [
+      ...prev,
+      {
+        content: inputText,
+        isBot: false,
+        timestamp: new Date(),
+      },
+      // LOADING MESSAGE
+      {
+        content: '',
+        isBot: true,
+        timestamp: new Date(),
+        isLoading: true,
+      },
+    ]);
+
+    const userQuestion = inputText;
     setInputText('');
+    setShowSuggestions(false);
+    setIsLoading(true);
+
+    const botResponse = await callChatbotAPI(userQuestion);
+
+    setMessages((prev) => [
+      ...prev.slice(0, -1),
+      {
+        content: botResponse,
+        isBot: true,
+        timestamp: new Date(),
+      },
+    ]);
+
+    setIsLoading(false);
   };
+
+  const LoadingDots = () => (
+    <div className="flex space-x-2">
+      <div className="h-2 w-2 animate-[pulse_1s_ease-in-out_infinite] rounded-full bg-[hsl(141,22%,60%)]"></div>
+      <div className="h-2 w-2 animate-[pulse_1s_ease-in-out_0.333s_infinite] rounded-full bg-[hsl(141,22%,60%)]"></div>
+      <div className="h-2 w-2 animate-[pulse_1s_ease-in-out_0.667s_infinite] rounded-full bg-[hsl(141,22%,60%)]"></div>
+    </div>
+  );
 
   return (
     <div
-      className={`fixed right-0 z-[100] transition-all duration-[400ms] ease-in-out will-change-transform md:right-12 ${isOpen ? 'md:bottom-0 max-md:top-0 max-md:bottom-0 max-md:translate-y-0' : '-bottom-[140vh] rounded-none duration-[400ms] md:-bottom-[480px] max-md:translate-y-full'} h-screen w-screen overflow-x-hidden bg-white shadow-xl md:h-[480px] md:w-[400px] md:rounded-t-xl`}
+      className={`fixed right-0 z-[100] ring ring-white/10 transition-all duration-[400ms] ease-in-out will-change-transform md:right-12 ${
+        isOpen ? 'max-md:top-0 md:bottom-0' : 'max-md:top-full max-md:translate-y-[100px] md:-bottom-[560px]'
+      } h-screen w-screen overflow-x-hidden bg-white shadow-xl md:h-[480px] md:w-[400px] md:rounded-t-xl`}
     >
       <div className="flex h-full w-full flex-col">
         {/* HEADER */}
-        <div className="flex h-12 w-full items-center justify-between bg-[var(--primary)] px-4 py-3 text-center text-[var(--green4)] shadow-lg md:shadow-md">
+        <div className="flex h-12 w-full items-center justify-between bg-[#12372A] px-4 py-3 text-center shadow-lg md:shadow-md">
           <div className="header flex items-center justify-start gap-2 text-lg font-semibold text-[#FFF1D1]">
-            <img src={LogoStempel} alt="FloraBot icon" width="24" height="24" />
+            <img src={LogoStempel || '/placeholder.svg'} alt="FloraBot icon" width="24" height="24" />
             <h2>FloraBot</h2>
           </div>
 
@@ -75,20 +156,42 @@ Kesadaran terhadap ekonomi hijau dan pekerjaan hijau adalah investasi untuk masa
         </div>
 
         {/* CHAT CONTENT */}
-        <div className="scrollbar-thin flex-1 overflow-y-auto border-b border-b-[#00000050]">
-          <div className="flex h-auto w-full flex-col gap-y-6 px-4 py-8">
+        <div ref={chatContainerRef} className="scrollbar-thin scroll-smooth flex-1 overflow-y-scroll border-b border-b-[#00000050]">
+          <div className="flex h-auto w-full flex-col px-4 py-8">
             {messages.map((message, index) => (
-              <div key={index} className={`w-auto max-w-[87%] md:max-w-[85%] ${message.isBot ? 'self-start' : 'self-end'}`}>
-                <div className={`flex w-auto items-start justify-start gap-2 ${!message.isBot && 'flex-row-reverse'}`}>
-                  <img src={message.isBot ? FloraBot : User} alt={`${message.isBot ? 'FloraBot' : 'User'} icon`} width={36} height={36} />
-                  <div className={`mt-1 px-4 py-2 text-[#FBFADA] ${message.isBot ? 'rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#436850]' : 'rounded-tl-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[var(--primary)]'}`}>
-                    {message.isBot ? (
-                      <div className="prose prose-invert prose-p:text-[#FFF1D1] prose-sm prose-headings:text-[#FFF1D1] prose-headings:text-xl prose-headings:font-bold prose-headings:-mb-3 prose-p:mb-0 prose-h1:text-[#FFF1D1] prose-h2:text-[#FFF1D1] prose-strong:text-[#FFF1D1] prose-em:text-[#FFF1D1] max-w-none text-sm leading-relaxed [overflow-wrap:break-word] [word-break:break-word] whitespace-pre-wrap">
-                        <ReactMarkdown>{message.content}</ReactMarkdown>
+              <div key={index} className={`w-full border-b border-b-[#00000020] py-4 last:border-b-0`}>
+                <div className={`w-auto max-w-[87%] md:max-w-[85%] ${message.isBot ? 'self-start' : 'ml-auto'}`}>
+                  <div className={`flex w-full items-start gap-2 ${!message.isBot && 'flex-row-reverse'}`}>
+                    <img src={message.isBot ? FloraBot : User} alt={`${message.isBot ? 'FloraBot' : 'User'} icon`} width={36} height={36} />
+                    <div className={`flex flex-col ${!message.isBot ? 'items-end' : 'items-start'}`}>
+
+                      <div className={`px-4 py-2 text-[#FBFADA] w-fit min-h-[30px] flex items-center h-auto ${message.isBot ? 'w-fit min-h-[30px] flex items-center h-auto rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#436850]' : 'rounded-tl-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#12372A]'}`}>
+                        {message.isLoading ? (
+                          <LoadingDots />
+                        ) : message.isBot ? (
+                          
+                          <div className="prose prose-invert prose-p:text-[#FFF1D1] prose-sm prose-headings:text-[#FFF1D1] prose-headings:text-xl prose-headings:font-bold prose-headings:-mb-3 prose-p:mb-0 prose-h1:text-[#FFF1D1] prose-h2:text-[#FFF1D1] prose-strong:text-[#FFF1D1] prose-em:text-[#FFF1D1] max-w-none text-sm leading-relaxed [overflow-wrap:break-word] [word-break:break-word] whitespace-pre-wrap">
+                            <ReactMarkdown>{message.content}</ReactMarkdown>
+                          </div>
+                        ) : (
+                          <p className="text-sm leading-relaxed [overflow-wrap:break-word] [word-break:break-word] whitespace-pre-wrap">{message.content}</p>
+                        )}
                       </div>
-                    ) : (
-                      <p className="text-sm leading-relaxed [overflow-wrap:break-word] [word-break:break-word] whitespace-pre-wrap">{message.content}</p>
-                    )}
+
+                      {index !== 0 && !message.isLoading && (
+                        <span className={`mt-2 px-4 text-xs text-[#12372A]/60`}>
+                          {message.timestamp.toLocaleString('en-US', {
+                            timeZone: 'Asia/Jakarta',
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: false,
+                          })}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -96,11 +199,23 @@ Kesadaran terhadap ekonomi hijau dan pekerjaan hijau adalah investasi untuk masa
           </div>
         </div>
 
+        {showSuggestions && (
+          <div className="flex flex-wrap justify-start gap-2 border-b border-b-[#00000050] p-4">
+            {suggestions.map((suggestion, index) => (
+              <button key={index} onClick={() => handleSuggestionClick(suggestion)} className="cursor-pointer rounded-full bg-[#436850] px-4 py-2 text-sm text-[#FFF1D1] transition-colors hover:bg-[#12372A]" title={suggestion}>
+                {suggestion}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {isLoading && null}
+
         {/* PROMPT */}
         <div className="h-auto w-full">
-          <div id="prompt" className="sticky bottom-0 left-0 z-[20] h-22 w-full bg-white px-4">
-            <form onSubmit={handleSubmit} className="flex h-full w-full items-start justify-between gap-2 pt-4">
-              <input type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} className="w-full rounded-full bg-white px-4 py-3 ring-1 ring-black outline-none ring-inset" placeholder="Hello World!" />
+          <div id="prompt" className="sticky bottom-0 left-0 z-[20] h-24 w-full bg-white px-4 max-md:h-28 max-sm:h-36">
+            <form onSubmit={handleSubmit} className="flex h-full w-full items-start justify-between gap-2 pt-6">
+              <input type="text" value={inputText} onChange={(e) => setInputText(e.target.value)} className="w-full rounded-full bg-white px-4 py-3 text-sm ring-1 ring-[#12372A] outline-none ring-inset" placeholder="Hello World!" />
               <button
                 type="submit"
                 disabled={!inputText.trim()}
@@ -119,5 +234,3 @@ Kesadaran terhadap ekonomi hijau dan pekerjaan hijau adalah investasi untuk masa
     </div>
   );
 }
-
-export default ChatMenu;
