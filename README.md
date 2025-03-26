@@ -2,6 +2,26 @@
 
 ## Theme: Green Economy and Green Jobs
 
+Clone repository:<br>
+```
+git clone https://github.com/AmirHamzah-1Fz/flora-surge.git
+```
+
+Instal Dependensi (wajib)
+```
+pnpm install
+```
+
+Checkout ke branch kalian:<br>
+```
+git checkout nama-branch
+```
+
+Buat branch baru:<br>
+```
+git checkout -b nama-branch
+```
+
 ## Tech Stack
 - **React.js** (Library)
 - **Vite** (Module Bundler)
