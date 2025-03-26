@@ -39,7 +39,7 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
     scrollToBottom();
   }, [messages]);
 
-  const suggestions = ['Apa itu Green Jobs?', 'Apa itu Green Economy?', 'Manfaat Green Economy'];
+  const suggestions = ['Apa itu Green Jobs?', 'Apa itu Green Economy?', 'Bagaimana sektor transportasi mendukung Green Economy?'];
 
   const handleSuggestionClick = (suggestion: string) => {
     setInputText(suggestion);
