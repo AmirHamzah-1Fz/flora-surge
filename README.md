@@ -22,6 +22,16 @@ Buat branch baru:<br>
 git checkout -b nama-branch
 ```
 
+Jangan lupa selalu cek status perubahan repositori
+```
+git status
+```
+
+Kemudian jika branch tertinggal, lakukan `pull`
+```
+git pull
+```
+
 ## Tech Stack
 - **React.js** (Library)
 - **Vite** (Module Bundler)
@@ -46,10 +56,9 @@ git checkout -b nama-branch
 4. Educational Page (Halaman kursus)  (`/pembelajaran`)
 
 ## Fitur Utama:
-* Sistem rekomendasi pekerjaan - ML & FEBE
 * Implementasi ChatBot (FloraBot) - ML & FEBE
 * Job Finder - ML & FEBE
-* Visualisasi data dampak lingkungan dari pekerjaan hijau - ML & FEBE  
+* Visualisasi Statistik Pekerjaan Hijau - ML & FEBE
 * Kursus sederhana - FE
 
 ## Komponen:
