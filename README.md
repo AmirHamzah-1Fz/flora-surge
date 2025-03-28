@@ -20,7 +20,7 @@ git checkout nama-branch
 
 Buat branch baru:<br>
 ```
-git checkout -b nama-branch
+git checkout -b nama-branch main
 ```
 
 Jangan lupa cek status perubahan dari branch (pastikan up-to-date)
