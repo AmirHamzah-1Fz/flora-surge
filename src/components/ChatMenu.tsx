@@ -26,7 +26,7 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
   const [messages, setMessages] = useState<Message[]>([
     // State untuk menyimpan history chat
     {
-      content: 'Halo, aku FloraBot. Aku akan membantu menjawab pertanyaan kamu di **bidang hijau**.',
+      content: 'Halo, aku FloraBot. Aku akan membantu menjawab pertanyaan kamu di **sektor hijau**.',
       isBot: true,
       timestamp: new Date(),
     },
@@ -94,8 +94,7 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
         console.error('Error with format', payload, ':', error);
       }
     }
-
-    return 'Maaf, terjadi kesalahan dalam memproses permintaan Anda.';
+     return 'Duh, FloraBot lagi mengalami masalah dalam memproses permintaan. Coba lagi nanti.';
   };
 
   // Fungsi untuk handle submit pesan baru
@@ -170,15 +169,16 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
           </button>
         </div>
 
-        {/* Area konten chat dengan auto-scroll */}
-        <div ref={chatContainerRef} className="scrollbar-thin flex-1 overflow-y-scroll scroll-smooth border-b border-b-[#00000050]">
-          <div className="flex h-auto w-full flex-col px-4 pt-4 pb-8">
+        {/* Kontent Chat */}
+        <div ref={chatContainerRef} className="scrollbar-thin scroll-smooth flex-1 overflow-y-scroll border-b border-b-[#00000050]">
+          <div className="flex h-auto w-full flex-col px-4 py-8">
             {messages.map((message, index) => (
               <div key={index} className={`w-full border-b border-b-[#00000020] py-4 last:border-b-0`}>
                 <div className={`w-auto max-w-[87%] md:max-w-[85%] ${message.isBot ? 'self-start' : 'ml-auto'}`}>
                   <div className={`flex w-full items-start gap-2 ${!message.isBot && 'flex-row-reverse'}`}>
                     <img src={message.isBot ? FloraBot : User} alt={`${message.isBot ? 'FloraBot' : 'User'} icon`} width={36} height={36} />
                     <div className={`flex flex-col ${!message.isBot ? 'items-end' : 'items-start'}`}>
+
                       <div
                         className={`flex h-auto min-h-[30px] w-fit items-center px-4 py-2 text-[#FBFADA] ${message.isBot ? 'flex h-auto min-h-[30px] w-fit items-center rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#436850]' : 'rounded-tl-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#12372A]'}`}
                       >
@@ -194,6 +194,7 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
                       </div>
 
                       {/* Mencetak timestamp jika urutan indeks chatboxnya bukan 0 (pertama) */}
+
                       {index !== 0 && !message.isLoading && (
                         <span className={`mt-2 px-4 text-xs text-[#12372A]/60`}>
                           {message.timestamp.toLocaleString('en-US', {

@@ -2,6 +2,37 @@
 
 ## Theme: Green Economy and Green Jobs
 
+## For Developers:
+Clone repository:<br>
+```
+git clone https://github.com/AmirHamzah-1Fz/flora-surge.git
+```
+
+Instal Dependensi (wajib)
+```
+pnpm install
+```
+
+Checkout ke branch kalian:<br>
+```
+git checkout nama-branch
+```
+
+Buat branch baru:<br>
+```
+git checkout -b nama-branch main
+```
+
+Jangan lupa cek status perubahan dari branch (pastikan up-to-date)
+```
+git status
+```
+
+Jika perubahan branch tertinggal, lakukan `pull`
+```
+git pull
+```
+
 ## Tech Stack
 - **React.js** (Library)
 - **Vite** (Module Bundler)
@@ -29,7 +60,7 @@
 * Sistem rekomendasi pekerjaan - ML & FEBE
 * Implementasi ChatBot (FloraBot) - ML & FEBE
 * Job Finder - ML & FEBE
-* Visualisasi data dampak lingkungan dari pekerjaan hijau - ML & FEBE  
+* Visualisasi Statistik Pekerjaan Hijau
 * Kursus sederhana - FE
 
 ## Komponen:
@@ -47,23 +78,29 @@ Akan diintegrasikan di setiap halaman
 	2. Informasi kontak (dummy)
 	3. Fitur navigasi ke halaman lainnya
 
-## Main Page:
+## Main Page (`/`)
 1. **Home**: Bagian pembuka web
 2. **About**: Informasi fitur dasar, peluang, benefit, dll
-3. **Statistics**: Beberapa statistik pekerjaan hijau
-4. **Contact Form**: Fitur untuk user bisa mengontak ke admin web
+3. **Statistics**: Statistik pekerjaan dari API
+4. **Feedback Form**: Integrasi API/Library untuk user menyampaikan umpan balik (EmailJS, Resend, Postmark, dll).
 
-## Article Page:
-Halaman khusus buat informasi tambahan tentang pekerjaan di bidang hijau, seperti dampak terbaru yang dihasilkan, perkembangan, dll.
+## Artikel dan Berita (`/artikel-dan-berita`)
+* Menyusun artikel dan berita (utamakan berita) secara manual (tanpa API).
+* Fitur klasifikasi berita dan artikel
+* Minimal jumlah konten adalah 6.
+* Berita atau artikel bisa ditulis sendiri atau dari sumber lain
+* Jika dari sumber lain, pastikan cantumkan sumbernya dan jangan copas mentah-mentah karena ngelanggar aturan jurnalistik.
 
-## Educational Page:
+## Educational Page (`/pembelajaran`)
 Halaman kursus sederhana, dengan konten pembelajaran:
 - *Glosarium* (Kamus istilah) di awal halaman.
 - Pengantar Ekonomi Hijau & Pekerjaan Hijau
 - Peluang Karir di sektor hijau (Jenis pekerjaan, gaji, manfaat, kebutuhan dll).
-- Konten pembelajaran lainnya
+- Materi komprehensif membahas tentang pentingnya kesadaran kita terhadap sektor hijau.
+- Penerapan Sektor di bidang hijau, contoh pertanian, transportasi, produksi pabrik, dll.
+- Dampak jika tidak ada green jobs.
+- Materi pembelajaran lainnya.
 
-## Job Finder Page
-* Menampilkan rekomendasi pekerjaan
-* Fitur filter kategori pekerjaan / klasifikasi pekerjaan
+## Job Finder Page (`job-finder`)
+* Menampilkan rekomendasi pekerjaan di sektor hijau
 * Fitur untuk menampilkan detail tentang lowongan yang disediakan
