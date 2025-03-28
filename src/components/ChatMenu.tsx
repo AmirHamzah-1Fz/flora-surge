@@ -22,7 +22,7 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
-      content: 'Halo, aku FloraBot. Aku akan membantu menjawab pertanyaan kamu di **bidang hijau**.',
+      content: 'Halo, aku FloraBot. Aku akan membantu menjawab pertanyaan kamu di **sektor hijau**.',
       isBot: true,
       timestamp: new Date(),
     },
