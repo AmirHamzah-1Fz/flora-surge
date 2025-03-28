@@ -2,6 +2,7 @@
 
 ## Theme: Green Economy and Green Jobs
 
+## For Developers:
 Clone repository:<br>
 ```
 git clone https://github.com/AmirHamzah-1Fz/flora-surge.git
@@ -20,6 +21,16 @@ git checkout nama-branch
 Buat branch baru:<br>
 ```
 git checkout -b nama-branch
+```
+
+Jangan lupa cek status perubahan dari branch (pastikan up-to-date)
+```
+git status
+```
+
+Jika perubahan branch tertinggal, lakukan `pull`
+```
+git pull
 ```
 
 ## Tech Stack
@@ -49,7 +60,7 @@ git checkout -b nama-branch
 * Sistem rekomendasi pekerjaan - ML & FEBE
 * Implementasi ChatBot (FloraBot) - ML & FEBE
 * Job Finder - ML & FEBE
-* Visualisasi data dampak lingkungan dari pekerjaan hijau - ML & FEBE  
+* Visualisasi Statistik Pekerjaan Hijau
 * Kursus sederhana - FE
 
 ## Komponen:
