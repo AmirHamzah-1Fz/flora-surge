@@ -1,30 +1,28 @@
-// Import dependencies dan assets yang dibutuhkan
 import FloraBot from '../assets/icons/FloraBot.svg';
 import User from '../assets/icons/User.svg';
 import ReactMarkdown from 'react-markdown';
 import { useState, useRef, useEffect } from 'react';
 import LogoStempel from '../assets/logo/Logo-stempel.svg';
 
-// Interface untuk props dan tipe data yang digunakan
 interface ChatMenuProps {
-  isOpen: boolean; // Status apakah chat window sedang terbuka
-  onClose: () => void; // Fungsi untuk menutup chat window
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 interface Message {
-  content: string; // Isi pesan chat
-  isBot: boolean; // Flag untuk membedakan pesan bot dan user
-  timestamp: Date; // Waktu pesan dikirim
-  isLoading?: boolean; // Status loading saat menunggu respon
+  content: string;
+  isBot: boolean;
+  timestamp: Date;
+  isLoading?: boolean;
 }
 
+const responseCache = new Map<string, string>();
+
 export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
-  // State management untuk berbagai fitur chatbot
-  const [inputText, setInputText] = useState(''); // State untuk input text user
-  const [showSuggestions, setShowSuggestions] = useState(true); // State untuk menampilkan suggestion
-  const [isLoading, setIsLoading] = useState(false); // State untuk loading indicator
+  const [inputText, setInputText] = useState('');
+  const [showSuggestions, setShowSuggestions] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    // State untuk menyimpan history chat
     {
       content: 'Halo, aku FloraBot. Aku akan membantu menjawab pertanyaan kamu di **sektor hijau**.',
       isBot: true,
@@ -32,10 +30,8 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
     },
   ]);
 
-  // Ref untuk auto-scroll ke pesan terbaru
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
-  // Fungsi untuk auto-scroll ke bagian bawah chat
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
@@ -46,76 +42,86 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
     scrollToBottom();
   }, [messages]);
 
-  // Daftar suggestion awal untuk user
   const suggestions = ['Apa itu Green Jobs?', 'Apa itu Green Economy?', 'Mengapa Green Economy itu penting?'];
 
-  // Fungsi untuk menghandle klik pada suggestion
   const handleSuggestionClick = (suggestion: string) => {
     setInputText(suggestion);
   };
 
-  // Fungsi untuk menghandle API call ke backend chatbot
-  const callChatbotAPI = async (question: string) => {
-    // Array format payload yang akan dicoba untuk kompatibilitas dengan berbagai API endpoint
-    const payloadFormats = [{ message: question }, { query: question }, { input: question }, { text: question }, { prompt: question }, { question: question }, { user_input: question }];
+  const callChatbotAPI = async (question: string): Promise<string> => {
 
-    // Mencoba setiap format payload sampai berhasil
+    if (responseCache.has(question)) {
+      console.log('Menggunakan respon dari cache');
+      return responseCache.get(question) as string;
+    }
+
+    const simpleAnswers: Record<string, string> = {
+      'hai': 'Halo! Ada yang bisa saya bantu?',
+      'halo': 'Halo! Ada yang bisa saya bantu?',
+      'hi': 'Halo! Ada yang bisa saya bantu?',
+      'hello': 'Halo! Ada yang bisa saya bantu?',
+      'terima kasih': 'Sama-sama! Senang bisa membantu.',
+      'thanks': 'Sama-sama! Senang bisa membantu.',
+      'makasih': 'Sama-sama! Senang bisa membantu.',
+      'apa kabar': 'Saya baik-baik saja, terima kasih sudah bertanya!',
+      'how are you': 'Saya baik-baik saja, terima kasih sudah bertanya!',
+    };
+
+    const lowerQuestion = question.toLowerCase();
+    if (simpleAnswers[lowerQuestion]) {
+      return simpleAnswers[lowerQuestion];
+    }
+
+    const payloadFormats = [
+      { question }, 
+      { message: question },
+      { query: question },
+      { input: question }
+    ];
+
     for (const payload of payloadFormats) {
       try {
-        console.log('Trying payload format:', payload);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // Timeout 10 detik
 
         const response = await fetch('https://greenjobs-api-chatbot.onrender.com/chatbot', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Accept: 'application/json',
+            'Accept': 'application/json',
           },
           body: JSON.stringify(payload),
+          signal: controller.signal
         });
 
-        const responseText = await response.text();
-        console.log(`Response status: ${response.status}, Response body:`, responseText);
+        clearTimeout(timeoutId);
 
-        if (!response.ok) {
-          console.log(`Format ${JSON.stringify(payload)} failed with status ${response.status}`);
-          continue;
-        }
+        if (!response.ok) continue;
 
-        let data;
-        try {
-          data = JSON.parse(responseText);
-        } catch {
-          console.log('Response is not valid JSON:', responseText);
-          data = { response: responseText };
-        }
+        const data = await response.json();
+        const botResponse = data.response || data.message || data.answer || data.text || JSON.stringify(data);
+        
+        responseCache.set(question, botResponse);
+        setTimeout(() => responseCache.delete(question), 300000); // Hapus cache setelah 5 menit
 
-        return data.response || data.message || data.answer || data.result || data.reply || data.text || (typeof data === 'string' ? data : JSON.stringify(data));
+        return botResponse;
       } catch (error) {
-        console.error('Error with format', payload, ':', error);
+        console.error(`Error dengan format ${JSON.stringify(payload)}:`, error);
+
       }
     }
-     return 'Duh, FloraBot lagi mengalami masalah dalam memproses permintaan. Coba lagi nanti.';
+    
+    return 'Maaf, saya sedang mengalami kendala teknis. Silakan coba lagi nanti atau tanyakan hal yang berbeda.';
   };
 
-  // Fungsi untuk handle submit pesan baru
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!inputText.trim()) return;
+    if (!inputText.trim() || isLoading) return;
 
-    setMessages((prev) => [
+    setMessages(prev => [
       ...prev,
-      {
-        content: inputText,
-        isBot: false,
-        timestamp: new Date(),
-      },
-      // LOADING MESSAGE
-      {
-        content: '',
-        isBot: true,
-        timestamp: new Date(),
-        isLoading: true,
-      },
+      { content: inputText, isBot: false, timestamp: new Date() },
+      { content: '', isBot: true, timestamp: new Date(), isLoading: true }
     ]);
 
     const userQuestion = inputText;
@@ -123,21 +129,28 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
     setShowSuggestions(false);
     setIsLoading(true);
 
-    const botResponse = await callChatbotAPI(userQuestion);
-
-    setMessages((prev) => [
-      ...prev.slice(0, -1),
-      {
-        content: botResponse,
-        isBot: true,
-        timestamp: new Date(),
-      },
-    ]);
-
-    setIsLoading(false);
+    try {
+      const botResponse = await callChatbotAPI(userQuestion);
+      
+      setMessages(prev => [
+        ...prev.slice(0, -1),
+        { content: botResponse, isBot: true, timestamp: new Date() }
+      ]);
+    } catch (error) {
+      console.error('Error:', error);
+      setMessages(prev => [
+        ...prev.slice(0, -1),
+        { 
+          content: 'Maaf, respon terlalu lama. Silakan coba pertanyaan yang lebih spesifik atau coba lagi nanti.', 
+          isBot: true, 
+          timestamp: new Date() 
+        }
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  // Komponen untuk menampilkan animasi loading
   const LoadingDots = () => (
     <div className="flex space-x-2">
       <div className="h-2 w-2 animate-[pulse_1s_ease-in-out_infinite] rounded-full bg-[hsl(141,22%,60%)]"></div>
@@ -147,21 +160,18 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
   );
 
   return (
-    // Container utama chatbot window dengan animasi slide
     <div
       className={`fixed right-0 z-[100] ring ring-white/10 transition-all duration-[400ms] ease-in-out will-change-transform md:right-12 ${
         isOpen ? 'max-md:top-0 md:bottom-0' : 'max-md:top-full max-md:translate-y-[100px] md:-bottom-[560px]'
       } h-screen w-screen overflow-x-hidden bg-white shadow-xl md:h-[480px] md:w-[400px] md:rounded-t-xl`}
     >
       <div className="flex h-full w-full flex-col">
-        {/* Header chatbot dengan logo dan tombol close */}
         <div className="flex h-12 w-full items-center justify-between bg-[#12372A] px-4 py-3 text-center shadow-lg md:shadow-md">
           <div className="header flex items-center justify-start gap-2 text-lg font-semibold text-[#FFF1D1]">
             <img src={LogoStempel || '/placeholder.svg'} alt="FloraBot icon" width="24" height="24" />
             <h2>FloraBot</h2>
           </div>
 
-          {/* Button untuk menutup chatbot window */}
           <button onClick={onClose} id="exit" className="group flex h-auto w-auto cursor-pointer items-center justify-center rounded-full p-2 transition-colors duration-300 ease-in-out hover:bg-[hsl(159,48%,18%)]" title="Tutup jendela">
             <svg className="h-full w-full shrink-0 fill-[#3BAB84] group-active:scale-95" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
               <path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z" />
@@ -169,7 +179,6 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
           </button>
         </div>
 
-        {/* Kontent Chat */}
         <div ref={chatContainerRef} className="scrollbar-thin scroll-smooth flex-1 overflow-y-scroll border-b border-b-[#00000050]">
           <div className="flex h-auto w-full flex-col px-4 py-8">
             {messages.map((message, index) => (
@@ -178,7 +187,6 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
                   <div className={`flex w-full items-start gap-2 ${!message.isBot && 'flex-row-reverse'}`}>
                     <img src={message.isBot ? FloraBot : User} alt={`${message.isBot ? 'FloraBot' : 'User'} icon`} width={36} height={36} />
                     <div className={`flex flex-col ${!message.isBot ? 'items-end' : 'items-start'}`}>
-
                       <div
                         className={`flex h-auto min-h-[30px] w-fit items-center px-4 py-2 text-[#FBFADA] ${message.isBot ? 'flex h-auto min-h-[30px] w-fit items-center rounded-tr-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#436850]' : 'rounded-tl-[20px] rounded-br-[20px] rounded-bl-[20px] bg-[#12372A]'}`}
                       >
@@ -192,8 +200,6 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
                           <p className="text-sm leading-relaxed [overflow-wrap:break-word] [word-break:break-word] whitespace-pre-wrap">{message.content}</p>
                         )}
                       </div>
-
-                      {/* Mencetak timestamp jika urutan indeks chatboxnya bukan 0 (pertama) */}
 
                       {index !== 0 && !message.isLoading && (
                         <span className={`mt-2 px-4 text-xs text-[#12372A]/60`}>
@@ -216,7 +222,6 @@ export default function ChatMenu({ isOpen, onClose }: ChatMenuProps) {
           </div>
         </div>
 
-        {/* Area suggestion/prompt awal */}
         {showSuggestions && (
           <div className="flex flex-wrap justify-start gap-2 border-b border-b-[#00000050] p-4">
             {suggestions.map((suggestion, index) => (
