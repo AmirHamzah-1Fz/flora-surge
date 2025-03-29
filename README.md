@@ -57,10 +57,10 @@ git pull
 4. Educational Page (Halaman kursus)  (`/pembelajaran`)
 
 ## Fitur Utama:
-* Sistem rekomendasi pekerjaan - ML & FEBE
-* Implementasi ChatBot (FloraBot) - ML & FEBE
 * Job Finder - ML & FEBE
-* Visualisasi Statistik Pekerjaan Hijau
+* Implementasi ChatBot (FloraBot) - ML & FEBE
+* Feedback Form - FEBE
+* Statistik Pekerjaan Hijau - FEBE
 * Kursus sederhana - FE
 
 ## Komponen:
@@ -77,6 +77,7 @@ Akan diintegrasikan di setiap halaman
 	1. Logo
 	2. Informasi kontak (dummy)
 	3. Fitur navigasi ke halaman lainnya
+        4. Feedback Form
 
 ## Main Page (`/`)
 1. **Home**: Bagian pembuka web
