@@ -53,7 +53,7 @@ git pull
 ## Halaman yang dibangun:
 1. Main page (Halaman root/utama) (`/`)
 2. Job Finder Page (`/job-finder`)
-3. Article Page (`/artikel`)
+3. Article Page (`/artikel-dan-berita`)
 4. Educational Page (Halaman kursus)  (`/pembelajaran`)
 
 ## Fitur Utama:
@@ -62,6 +62,7 @@ git pull
 * Feedback Form - FEBE
 * Statistik Pekerjaan Hijau - FEBE
 * Kursus sederhana - FE
+* Artikel dan Berita
 
 ## Komponen:
 - **ChatBot (FloraBot)**
