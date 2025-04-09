@@ -118,7 +118,7 @@ function Header() {
           </div>
         )}
 
-        <button type="button" className="hidden cursor-pointer rounded-full bg-[var(--primary)] px-4 py-2 text-center text-sm text-[var(--green3)] lg:block">
+        <button type="button" className="hidden cursor-pointer rounded-full bg-primary px-4 py-2 text-center text-sm text-green3 lg:block">
           <a href="/pembelajaran">Mulai Sekarang</a>
         </button>
       </div>

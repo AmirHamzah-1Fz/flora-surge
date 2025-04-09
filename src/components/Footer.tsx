@@ -2,7 +2,7 @@ import FeedbackForm from './FeedbackForm';
 
 function Footer() {
   return (
-    <footer className="flex h-auto w-full flex-col items-center justify-between bg-[var(--primary)] px-[5%] py-8">
+    <footer className="flex h-auto w-full flex-col items-center justify-between bg-primary px-[5%] py-8">
       <div className="h-auto w-auto">
         <div className="flex w-full flex-wrap items-start justify-start gap-16 md:gap-20">
           <div className="flex max-w-xl flex-col">
@@ -27,17 +27,17 @@ function Footer() {
               <h2 className="text-xl font-bold text-white">Tentang Kami</h2>
               <ul className="mt-1">
                 <li className="h-fit w-fit py-1">
-                  <a href="/#about" className="h-max text-sm font-light text-[var(--t-green)] transition-colors hover:cursor-pointer hover:text-[var(--green4)]">
+                  <a href="/#about" className="h-max text-sm font-light text-t-green transition-colors hover:cursor-pointer hover:text-green4">
                     Dampak
                   </a>
                 </li>
                 <li className="h-fit w-fit py-1">
-                  <a href="/#statistics" className="h-max text-sm font-light text-[var(--t-green)] transition-colors hover:cursor-pointer hover:text-[var(--green4)]">
+                  <a href="/#statistics" className="h-max text-sm font-light text-t-green transition-colors hover:cursor-pointer hover:text-green4">
                     Statistik
                   </a>
                 </li>
                 <li className="h-fit w-fit py-1">
-                  <a href="/#profile" className="h-max text-sm font-light text-[var(--t-green)] transition-colors hover:cursor-pointer hover:text-[var(--green4)]">
+                  <a href="/#profile" className="h-max text-sm font-light text-t-green transition-colors hover:cursor-pointer hover:text-green4">
                     Profil
                   </a>
                 </li>
@@ -48,17 +48,17 @@ function Footer() {
               <h2 className="text-xl font-bold text-white">Fitur</h2>
               <ul className="mt-1">
                 <li className="h-fit w-fit py-1">
-                  <a href="/pembelajaran" className="h-max w-full text-sm font-light text-[var(--t-green)] transition-colors hover:cursor-pointer hover:text-[var(--green4)]">
+                  <a href="/pembelajaran" className="h-max w-full text-sm font-light text-t-green transition-colors hover:cursor-pointer hover:text-green4">
                     Pembelajaran elektronik
                   </a>
                 </li>
                 <li className="h-fit w-fit py-1">
-                  <a href="/" className="h-max text-sm font-light text-[var(--t-green)] transition-colors hover:cursor-pointer hover:text-[var(--green4)]">
+                  <a href="/" className="h-max text-sm font-light text-t-green transition-colors hover:cursor-pointer hover:text-green4">
                     Bertanya ke FloraBot
                   </a>
                 </li>
                 <li className="h-fit w-fit py-1">
-                  <a href="/artikel-dan-berita" className="h-max text-sm font-light text-[var(--t-green)] transition-colors hover:cursor-pointer hover:text-[var(--green4)]">
+                  <a href="/artikel-dan-berita" className="h-max text-sm font-light text-t-green transition-colors hover:cursor-pointer hover:text-green4">
                     Artikel dan berita
                   </a>
                 </li>
@@ -69,7 +69,7 @@ function Footer() {
       </div>
 
       <div className="mt-20 w-full">
-        <p className="text-center text-xs tracking-wide text-[var(--green4)]">&copy; 2025 FloraSurge. All rights reserved.</p>
+        <p className="text-center text-xs tracking-wide text-green4">&copy; 2025 FloraSurge. All rights reserved.</p>
       </div>
     </footer>
   );
