@@ -4,13 +4,13 @@
 
 /* VARIABLE */
 @theme {
-    --primary: #12372A;
-    --green1: #436850;
-    --green2: #ADBC9F;
-    --green3: #FBFADA;
-    --green4: #FFFFFF;
+    --colors-primary: #12372A;
+    --colors-green1: #436850;
+    --colors-green2: #ADBC9F;
+    --colors-green3: #FBFADA;
+    --colors-green4: #FFFFFF;
 
-    --t-green: #7E978C;
+    --colors-t-green: #7E978C;
   }
 
 body {
