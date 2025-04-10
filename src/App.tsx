@@ -5,11 +5,13 @@ import Home from './pages/Home';
 import Pembelajaran from './pages/Pembelajaran';
 import ArtikelBerita from './pages/ArtikelBerita';
 import JobFinder from './pages/JobFinder';
+import ChatBot from './components/ChatBot';
 
 function App() {
   return (
     <>
       <Header />
+      <ChatBot />
       <main className="">
         <Routes>
           <Route path="/" element={<Home />} />

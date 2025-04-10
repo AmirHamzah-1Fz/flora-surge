@@ -1,12 +1,10 @@
-import ChatBot from "../components/ChatBot"
-import Page from "../components/Pembelajaran/Page"
+import Page from '../components/Pembelajaran/Page';
 function Pembelajaran() {
   return (
     <>
-    <Page/>
-      <ChatBot />
+      <Page />
     </>
-  )
+  );
 }
 
-export default Pembelajaran
+export default Pembelajaran;
