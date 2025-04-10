@@ -79,12 +79,12 @@ export default function ArticleHero() {
   return (
     <section className="h-full w-full">
       <div className="relative h-screen w-full overflow-hidden">
-        <div className="absolute -z-[90] w-full bg-gradient-to-br from-[var(--primary)]/80 from-60% to-[#000000]/60 max-md:to-[#000000]/20 lg:h-full"></div>
+        <div className="absolute -z-[90] w-full bg-gradient-to-br from-primary/80 from-60% to-[#000000]/60 max-md:to-[#000000]/20 lg:h-full"></div>
         <img src={Bg} alt="Background" className="absolute -z-[100] h-full w-full object-cover brightness-[80%]" />
 
         <div className="mt-4 flex h-full w-full items-center justify-center px-[4%] max-sm:px-[3%]">
-          <div className="flex h-auto w-full flex-col items-start justify-start text-left lg:max-w-3xl">
-            <h1 className="text-4xl leading-[70px] font-semibold text-[var(--green3)] max-md:leading-normal max-sm:text-3xl md:text-5xl">
+          <div className="flex text-green3 h-auto w-full flex-col items-start justify-start text-left lg:max-w-3xl">
+            <h1 className="text-4xl leading-[70px] font-semibold text-green-3 max-md:leading-normal max-sm:text-3xl md:text-5xl">
               Flora Surge Careers:
               <br /> Opportunities in Sustainable Agriculture
             </h1>
