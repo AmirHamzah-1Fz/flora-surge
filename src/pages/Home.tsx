@@ -1,4 +1,3 @@
-import ChatBot from "../components/ChatBot"
 import About from "../components/home/About"
 import Hero from "../components/home/Hero"
 import Profile from "../components/home/Profile"
@@ -9,7 +8,6 @@ function Home() {
         <Hero />
         <About />
         <Profile />
-        <ChatBot />
     </>
   )
 }

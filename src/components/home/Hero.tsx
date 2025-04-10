@@ -2,7 +2,7 @@ import Bg from '../../assets/img/green-env.jpg';
 
 function Hero() {
   return (
-    <section className="h-screen w-full">
+    <section id="home" className="h-screen w-full">
       <div className="relative h-full w-full overflow-hidden">
         <div className="from-primary/80 absolute -z-[90] h-full w-full bg-gradient-to-br from-60% to-[#000000]/60 max-md:to-[#000000]/20"></div>
         <img src={Bg} alt="Background" className="absolute -z-[100] h-full w-full object-cover brightness-[80%]" />
