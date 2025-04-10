@@ -20,7 +20,7 @@ function ChatBot() {
     <>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`rounded-tr-5xl fixed right-6 z-[110] transition-all ease-in-out will-change-transform md:right-12 ${isOpen ? '-bottom-20 duration-[600ms]' : 'bottom-12 duration-[400ms]'} flex h-14 w-14 cursor-pointer items-center justify-center rounded-tl-full rounded-br-full rounded-bl-full bg-[hsl(159,49%,12%)] p-[16px] hover:scale-105 hover:bg-[hsl(159,49%,11%)] hover:shadow-lg active:scale-95 md:h-16 md:w-16`}
+        className={`rounded-tr-5xl fixed right-6 z-[110] transition-all ease-in-out will-change-transform md:right-12 ${isOpen ? '-bottom-20 duration-[600ms]' : 'bottom-12 duration-[400ms]'} flex h-14 w-14 cursor-pointer items-center justify-center rounded-tl-full rounded-br-full rounded-bl-full bg-[#059669] p-[16px] hover:scale-105 hover:bg-[hsl(159,49%,11%)] hover:shadow-lg active:scale-95 md:h-16 md:w-16`}
         title="Tanya FloraBot"
       >
         <svg className="h-full w-full shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#ffffff">
