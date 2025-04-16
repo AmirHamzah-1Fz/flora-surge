@@ -15,7 +15,6 @@ type Article = {
   date?: string;
 };
 
-
     // ini data dummy doang nanti kalo api untuk article udah jadi bisa fetch dari api nya saja
     export const articles:Article[] = [
         {
