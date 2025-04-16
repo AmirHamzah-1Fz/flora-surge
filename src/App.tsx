@@ -6,6 +6,7 @@ import Pembelajaran from './pages/Pembelajaran';
 import ArtikelBerita from './pages/ArtikelBerita';
 import JobFinder from './pages/JobFinder';
 import ChatBot from './components/ChatBot';
+import DetailArticle from './components/article/DetailArticle';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/job-finder" element={<JobFinder />} />
           <Route path="/artikel-berita" element={<ArtikelBerita />} />
           <Route path="/artikel-dan-berita" element={<ArtikelBerita />} />
+          <Route path="/detailArticle/:slug" element={<DetailArticle />} />
         </Routes>
       </main>
       <Footer />
