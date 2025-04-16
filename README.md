@@ -57,10 +57,10 @@ git pull
 4. Educational Page (Halaman kursus)  (`/pembelajaran`)
 
 ## Fitur Utama:
-* Job Finder - ML & FEBE
+~~* Job Finder - ML & FEBE~~
 * Implementasi ChatBot (FloraBot) - ML & FEBE
 * Feedback Form - FEBE
-* Statistik Pekerjaan Hijau - FEBE
+~~* Statistik Pekerjaan Hijau - FEBE~~
 * Kursus sederhana - FE
 * Artikel dan Berita
 
