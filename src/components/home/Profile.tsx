@@ -1,6 +1,8 @@
 import React from 'react';
 
-import Petani from '../../assets/img/Petani.png';
+import Buku from '../../assets/img/Buku.jpg';
+import Petani from '../../assets/img/Petani.png'
+
 import { Link } from 'react-router-dom';
 
 const ProfileSection: React.FC = () => {
@@ -12,7 +14,7 @@ const ProfileSection: React.FC = () => {
 
           <div className="mt-10 flex h-auto w-full flex-col gap-10">
             <div className="flex max-md:flex-col h-auto w-full items-center justify-start gap-10 lg:flex-row">
-              <img src={Petani} alt="Petani" className="w-1/2 max-md:w-full" />
+              <img src={Buku} alt="Buku" className="w-1/2 max-md:w-full lg:rounded-3xl rounded-2xl" />
 
               <div className="flex h-auto w-full flex-col">
                 <h2 className="text-primary text-xl font-bold lg:text-3xl">Pembelajaran Elektronik</h2>
@@ -25,14 +27,14 @@ const ProfileSection: React.FC = () => {
             </div>
 
             <div className="flex max-md:flex-col h-auto w-full items-center justify-start gap-10 lg:flex-row-reverse">
-              <img src={Petani} alt="Petani" className="w-1/2 max-md:w-full" />
+              <img src={Petani} alt="Petani" className="w-1/2 max-md:w-full lg:rounded-3xl rounded-2xl" />
 
               <div className="flex h-auto w-full flex-col">
                 <h2 className="text-primary text-xl font-bold lg:text-3xl">Berita Tentang Green Jobs and Green Economy</h2>
                 <p className="text-green1 mt-4 text-base lg:text-base">Dapatkan berita terbaru di sektor hijau untuk mendukung wawasan terbaru terkait perkembangan di sektor hijau.</p>
 
                 <Link to="/artikel-dan-berita">
-                  <button className="bg-primary text-light mt-8 w-fit cursor-pointer rounded-xl px-4 py-3 text-sm font-medium">Mulai Pembelajaran</button>
+                  <button className="bg-primary text-light mt-8 w-fit cursor-pointer rounded-xl px-4 py-3 text-sm font-medium">Baca Artikel</button>
                 </Link>
               </div>
             </div>
