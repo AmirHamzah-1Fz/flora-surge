@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Bg from '../../assets/img/green-env.jpg';
 import { articles } from '../../data/Article';
 
@@ -26,9 +27,9 @@ export default function ArticleHero() {
       </div>
       <div className="mt-28 flex flex-col bg-white px-6 md:px-12 lg:px-[6ch]">
         <h2 className="font-semibold max-sm:text-3xl md:text-5xl">Berita Hari Ini</h2>
-        <div className="mt-[5ch] grid w-full grid-rows-3 gap-4 gap-y-[6ch] sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-[5ch] grid w-full grid-rows-2 gap-4 gap-y-[6ch] sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {articles.map((article, index: number) => (
-            <div key={index} className="flex w-full flex-col lg:max-w-xl cursor-pointer transition-transform ease-linear duration-200 hover:scale-[102%]">
+            <Link to={`/detailArticle/${article.slug}`} key={index} className="flex w-full flex-col lg:max-w-xl cursor-pointer transition-transform ease-linear duration-200 hover:scale-[102%]">
               <div className="w-full lg:max-h-60">
                 <img src={article.backgroundImage} alt="Background" className="h-full w-full rounded-2xl object-cover" />
               </div>
@@ -42,7 +43,7 @@ export default function ArticleHero() {
                   <span className="">{article.date}</span>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
         <button className="cursor-pointer mx-auto my-20 h-14 w-[18ch] rounded-3xl bg-[#12372A] text-lg font-semibold tracking-wide text-white transition duration-200 ease-in hover:border hover:border-[#12372A] hover:text-black hover:bg-transparent">Berita Lainnya</button>
