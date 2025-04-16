@@ -1,9 +1,9 @@
 import Avatar from '../assets/img/avatar.png';
 import Image1 from '../assets/img/image1.jpeg';
-import Image2 from '../assets/img/image2.png';
-import Image3 from '../assets/img/image3.png';
+import Image2 from '../assets/img/image2.jpg';
+import Image3 from '../assets/img/image3.jpg';
 import Image4 from '../assets/img/image4.png';
-import Image5 from '../assets/img/image5.png';
+import Image5 from '../assets/img/image5.jpg';
 import Image6 from '../assets/img/image6.png';
 
 type Article = {
