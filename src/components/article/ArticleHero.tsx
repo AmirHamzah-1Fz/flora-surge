@@ -1,80 +1,9 @@
 import Bg from '../../assets/img/green-env.jpg';
-import cardImage from '../../assets/img/Petani.png';
-import Avatar from '../../assets/img/avatar.png';
+import { articles } from '../../data/Article';
 
-type Article = {
-  title: string;
-  description: string;
-  backgroundImage: string;
-  avatar: string;
-  date?: string;
-};
 
 export default function ArticleHero() {
 
-    // ini data dummy doang nanti kalo api untuk article udah jadi bisa fetch dari api nya saja
-  const articles = [
-    {
-      title: 'AI Bantu Petani Tingkatkan Hasil Panen',
-      description: 'AI berperan pada dunia pertanian. Dari analisis cuaca hingga optimasi penggunaan pupuk, bagaimana AI membantu petani menghadapi tantangan produksi pangan?',
-      backgroundImage: cardImage,
-      avatar: Avatar,
-      date: 'Sunday, 22 March 2025',
-    },
-    {
-      title: 'AI Bantu Petani Tingkatkan Hasil Panen',
-      description: 'AI berperan pada dunia pertanian. Dari analisis cuaca hingga optimasi penggunaan pupuk, bagaimana AI membantu petani menghadapi tantangan produksi pangan?',
-      backgroundImage: cardImage,
-      avatar: Avatar,
-      date: 'Sunday, 22 March 2025',
-    },
-    {
-      title: 'AI Bantu Petani Tingkatkan Hasil Panen',
-      description: 'AI berperan pada dunia pertanian. Dari analisis cuaca hingga optimasi penggunaan pupuk, bagaimana AI membantu petani menghadapi tantangan produksi pangan?',
-      backgroundImage: cardImage,
-      avatar: Avatar,
-    },
-    {
-      title: 'AI Bantu Petani Tingkatkan Hasil Panen',
-      description: 'AI berperan pada dunia pertanian. Dari analisis cuaca hingga optimasi penggunaan pupuk, bagaimana AI membantu petani menghadapi tantangan produksi pangan?',
-      backgroundImage: cardImage,
-      avatar: Avatar,
-    },
-    {
-      title: 'AI Bantu Petani Tingkatkan Hasil Panen',
-      description: 'AI berperan pada dunia pertanian. Dari analisis cuaca hingga optimasi penggunaan pupuk, bagaimana AI membantu petani menghadapi tantangan produksi pangan?',
-      backgroundImage: cardImage,
-      avatar: Avatar,
-    },
-    {
-      title: 'AI Bantu Petani Tingkatkan Hasil Panen',
-      description: 'AI berperan pada dunia pertanian. Dari analisis cuaca hingga optimasi penggunaan pupuk, bagaimana AI membantu petani menghadapi tantangan produksi pangan?',
-      backgroundImage: cardImage,
-      avatar: Avatar,
-      date: 'Sunday, 22 March 2025',
-    },
-    {
-      title: 'AI Bantu Petani Tingkatkan Hasil Panen',
-      description: 'AI berperan pada dunia pertanian. Dari analisis cuaca hingga optimasi penggunaan pupuk, bagaimana AI membantu petani menghadapi tantangan produksi pangan?',
-      backgroundImage: cardImage,
-      avatar: Avatar,
-      date: 'Sunday, 22 March 2025',
-    },
-    {
-      title: 'AI Bantu Petani Tingkatkan Hasil Panen',
-      description: 'AI berperan pada dunia pertanian. Dari analisis cuaca hingga optimasi penggunaan pupuk, bagaimana AI membantu petani menghadapi tantangan produksi pangan?',
-      backgroundImage: cardImage,
-      avatar: Avatar,
-      date: 'Sunday, 22 March 2025',
-    },
-    {
-      title: 'AI Bantu Petani Tingkatkan Hasil Panen',
-      description: 'AI berperan pada dunia pertanian. Dari analisis cuaca hingga optimasi penggunaan pupuk, bagaimana AI membantu petani menghadapi tantangan produksi pangan?',
-      backgroundImage: cardImage,
-      avatar: Avatar,
-      date: 'Sunday, 22 March 2025',
-    },
-  ];
 
   return (
     <section className="h-full w-full">
@@ -98,7 +27,7 @@ export default function ArticleHero() {
       <div className="mt-28 flex flex-col bg-white px-6 md:px-12 lg:px-[6ch]">
         <h2 className="font-semibold max-sm:text-3xl md:text-5xl">Berita Hari Ini</h2>
         <div className="mt-[5ch] grid w-full grid-rows-3 gap-4 gap-y-[6ch] sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {articles.map((article: Article, index: number) => (
+          {articles.map((article, index: number) => (
             <div key={index} className="flex w-full flex-col lg:max-w-xl cursor-pointer transition-transform ease-linear duration-200 hover:scale-[102%]">
               <div className="w-full lg:max-h-60">
                 <img src={article.backgroundImage} alt="Background" className="h-full w-full rounded-2xl object-cover" />
