@@ -1,43 +1,46 @@
-  import React from "react";
+import React from 'react';
 
-  const ProfileSection: React.FC = () => {
-    return (
-      <section className="text-center my-16 py-12">
-        <h2 className="text-3xl font-bold text-teal-800 mb-12">Mengapa Harus #FloraJobs?</h2>
-        
-        <div className="grid grid-cols-1 gap-12 items-center justify-center max-w-4xl mx-auto">
-          {/* Card Pembelajaran Elektronik */}
-          <div className="flex flex-col items-center md:flex-row">
-            <div className="w-230 h-80 bg-primary rounded-lg"></div> 
-            <div className="mt-6 md:mt-0 md:ml-8 text-left">
-              <h3 className="text-xl font-semibold text-primary">Pembelajaran Elektronik</h3>
-              <p className="text-gray-600 mt-4">
-                Kami menyediakan sumber daya pembelajaran yang cukup komprehensif membahas
-                tentang sektor hijau untuk mendukung kesiapan karir dan wawasan Anda di sektor hijau.
-              </p>
-              <button className="mt-6 py-2 px-4 bg-primary text-white rounded-md hover:bg-teal-700 transition">
-                Lihat Kursus Sekarang
-              </button>
+import Petani from '../../assets/img/Petani.png';
+import { Link } from 'react-router-dom';
+
+const ProfileSection: React.FC = () => {
+  return (
+    <section id="about" className="min-h-screen w-full py-16 md:py-24">
+      <div className="container mx-auto w-full px-4 lg:max-w-5xl xl:max-w-6xl">
+        <div className="h-auto w-full">
+          <h2 className="mb-12 text-center text-3xl font-bold text-teal-800">Mengapa Harus #FloraJobs?</h2>
+
+          <div className="mt-10 flex h-auto w-full flex-col gap-10">
+            <div className="flex max-md:flex-col h-auto w-full items-center justify-start gap-10 lg:flex-row">
+              <img src={Petani} alt="Petani" className="w-1/2 max-md:w-full" />
+
+              <div className="flex h-auto w-full flex-col">
+                <h2 className="text-primary text-xl font-bold lg:text-3xl">Pembelajaran Elektronik</h2>
+                <p className="text-green1 mt-4 text-base lg:text-base">Kami menyediakan sumber materi pembelajaran komprehensif yang membahas tentang Green Jobs and Green Economy.</p>
+
+                <Link to="/pembelajaran">
+                  <button className="bg-primary text-light mt-8 w-fit cursor-pointer rounded-xl px-4 py-3 text-sm font-medium">Mulai Pembelajaran</button>
+                </Link>
+              </div>
             </div>
-          </div>
 
-          {/* Card Berita Tentang Green Jobs */}
-          <div className="flex flex-col items-center md:flex-row-reverse">
-            <div className="w-170 h-80 bg-primary rounded-lg"></div> 
-            <div className="mt-6 md:mt-0 md:mr-8 text-left">
-              <h3 className="text-xl font-semibold text-primary">Berita Tentang Green Jobs and Green Economy</h3>
-              <p className="text-gray-600 mt-4">
-                Dapatkan berita terbaru di sektor hijau untuk mendukung wawasan terbaru terkait
-                perkembangan di sektor hijau.
-              </p>
-              <button className="mt-6 py-2 px-4 bg-primary text-white rounded-md hover:bg-teal-700 transition">
-                Baca Artikel
-              </button>
+            <div className="flex max-md:flex-col h-auto w-full items-center justify-start gap-10 lg:flex-row-reverse">
+              <img src={Petani} alt="Petani" className="w-1/2 max-md:w-full" />
+
+              <div className="flex h-auto w-full flex-col">
+                <h2 className="text-primary text-xl font-bold lg:text-3xl">Berita Tentang Green Jobs and Green Economy</h2>
+                <p className="text-green1 mt-4 text-base lg:text-base">Dapatkan berita terbaru di sektor hijau untuk mendukung wawasan terbaru terkait perkembangan di sektor hijau.</p>
+
+                <Link to="/artikel-dan-berita">
+                  <button className="bg-primary text-light mt-8 w-fit cursor-pointer rounded-xl px-4 py-3 text-sm font-medium">Mulai Pembelajaran</button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
-      </section>
-    );
-  };
+      </div>
+    </section>
+  );
+};
 
-  export default ProfileSection;
+export default ProfileSection;

@@ -16,5 +16,5 @@
   }
 
 body {
-    @apply bg-green-50;
+    @apply bg-green-50/60;
 }
